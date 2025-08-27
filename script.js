@@ -188,8 +188,8 @@ function verifyClaim() { const numbersText = verifyNumbersInput.value; const num
 function resetVerification() { verifyNumbersInput.value = ''; verifyResultDiv.innerHTML = ''; }
 function updateCalledNumbersList() {
     calledNumbersList.innerHTML = '';
-    // FIX: Removed .sort() to show numbers in draw order
-    calledNumbers.forEach(num => {
+    const lastFive = calledNumbers.slice(-5); // Get only the last 5 numbers
+    lastFive.forEach(num => {
         const s = document.createElement('span');
         s.textContent = num;
         calledNumbersList.appendChild(s);
