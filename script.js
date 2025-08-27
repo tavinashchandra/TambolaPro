@@ -28,13 +28,16 @@ const tabPanes = document.querySelectorAll('.tab-pane');
 const autoDrawBtn = document.getElementById('auto-draw-btn');
 const autoDrawTimeInput = document.getElementById('auto-draw-time');
 
+
 // --- GAME STATE ---
 let availableNumbers = [], calledNumbers = [], prizes = [], drawHistory = [];
 let totalPrizePool = 0;
 let calculationMode = 'auto', voiceEnabled = true;
 let autoDrawIntervalId = null;
 
+
 const defaultPrizes = [ { id: 'early_5', name: 'Early 5', weight: 1, claimed: false, winner: '', amount: '' }, { id: 'first_line', name: 'First Line', weight: 2, claimed: false, winner: '', amount: '' }, { id: 'second_line', name: 'Second Line', weight: 2, claimed: false, winner: '', amount: '' }, { id: 'third_line', name: 'Third Line', weight: 2, claimed: false, winner: '', amount: '' }, { id: 'corners', name: 'Corners', weight: 1, claimed: false, winner: '', amount: '' }, { id: 'full_housie', name: 'Full Housie', weight: 4, claimed: false, winner: '', amount: '' }];
+
 
 function handleTabClick(event) {
     const clickedTab = event.target.closest('.tab-btn');
@@ -46,6 +49,7 @@ function handleTabClick(event) {
     });
     document.getElementById(clickedTab.dataset.target).classList.add('active');
 }
+
 
 function applyFont(font) { document.documentElement.style.setProperty('--main-font', font); }
 function applyTheme(theme) { document.body.className = theme; }
@@ -85,6 +89,7 @@ function renderPrizes() {
         const claimBtnTxt = prize.claimed ? 'Unclaim' : 'Claim';
         const claimBtnClass = prize.claimed ? 'unclaim primary-btn' : '';
 
+
         item.innerHTML = `
             <span class="prize-name">${prize.name}</span>
             <div class="prize-details">
@@ -113,6 +118,7 @@ function handlePrizeListEvents(event) {
     if (!prizeId) return;
     const prize = prizes.find(p => p.id === prizeId);
     if (!prize) return;
+
 
     if (target.classList.contains('claim-btn')) {
         prize.claimed = !prize.claimed;
@@ -158,6 +164,7 @@ function loadSavedState() {
         document.getElementById('auto-mode').checked = true;
     }
 
+
     if (savedFont) { applyFont(savedFont); fontSelector.value = savedFont; } else { applyFont(fontSelector.value); } 
     if (savedTheme) { applyTheme(savedTheme); themeSelector.value = savedTheme; } else { applyTheme(themeSelector.value); } 
     if (savedVoice !== null) { voiceEnabled = savedVoice === 'true'; voiceToggle.checked = voiceEnabled; } 
@@ -166,6 +173,7 @@ function loadSavedState() {
     
     updateUIVisibility(); 
     renderPrizes(); 
+
 
     if (localStorage.getItem('calledNumbers')) { 
         calledNumbers = JSON.parse(localStorage.getItem('calledNumbers')); 
@@ -186,15 +194,20 @@ function drawNumber() { if (availableNumbers.length === 0) { stopAutoDraw(); ret
 function undoLastNumber() { stopAutoDraw(); if (drawHistory.length === 0) return; const lastNumber = drawHistory.pop(); calledNumbers = calledNumbers.filter(n => n !== lastNumber); availableNumbers.push(lastNumber); document.getElementById(`cell-${lastNumber}`).classList.remove('called'); updateCalledNumbersList(); const newLast = drawHistory.length > 0 ? drawHistory[drawHistory.length - 1] : '--'; currentNumberDisplay.textContent = newLast; if (drawHistory.length === 0) undoButton.disabled = true; drawButton.disabled = false; saveGameState(); }
 function verifyClaim() { const numbersText = verifyNumbersInput.value; const numbersToVerify = numbersText.match(/\d+/g); verifyResultDiv.innerHTML = ''; if (!numbersToVerify || numbersToVerify.length === 0) { verifyResultDiv.innerHTML = '<p class="subtle-text">Please enter some numbers to verify.</p>'; return; } let allCalled = true; let resultHTML = '<h4>Verification Result:</h4>'; numbersToVerify.forEach(numStr => { const num = parseInt(numStr); let statusClass = 'not-called'; let statusText = '(Not Called)'; if (calledNumbers.includes(num)) { statusClass = 'called'; statusText = '(Called)'; } else { allCalled = false; } resultHTML += `<span class="num ${statusClass}">${num} ${statusText}</span>`; }); let finalMessage = allCalled ? '<h4 style="color: var(--success-color);">✔️ VALID CLAIM!</h4>' : '<h4 style="color: var(--error-color);">❌ INVALID CLAIM!</h4>'; verifyResultDiv.innerHTML = finalMessage + resultHTML; }
 function resetVerification() { verifyNumbersInput.value = ''; verifyResultDiv.innerHTML = ''; }
+
+
 function updateCalledNumbersList() {
     calledNumbersList.innerHTML = '';
-    // Shows numbers in the order they were drawn
-    calledNumbers.forEach(num => {
+    // --- BUG FIX: This line now correctly slices the array to show only the last 5 numbers ---
+    const lastFive = calledNumbers.slice(-5);
+    lastFive.forEach(num => {
         const s = document.createElement('span');
         s.textContent = num;
         calledNumbersList.appendChild(s);
     });
 }
+
+
 function saveGameState() { localStorage.setItem('calledNumbers', JSON.stringify(calledNumbers)); localStorage.setItem('availableNumbers', JSON.stringify(availableNumbers)); localStorage.setItem('drawHistory', JSON.stringify(drawHistory)); }
 function handleAutoDraw() {
     if (autoDrawIntervalId) {
@@ -218,6 +231,7 @@ function stopAutoDraw() {
     }
 }
 
+
 // --- EVENT LISTENERS ---
 fontSelector.addEventListener('change', handleFontChange);
 themeSelector.addEventListener('change', handleThemeChange);
@@ -234,6 +248,7 @@ prizeListContainer.addEventListener('input', handlePrizeListEvents);
 modeSelectors.forEach(radio => radio.addEventListener('change', handleModeChange));
 tabBar.addEventListener('click', handleTabClick);
 autoDrawBtn.addEventListener('click', handleAutoDraw);
+
 
 // --- INITIAL LOAD ---
 loadSavedState();
