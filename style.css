@@ -64,29 +64,29 @@ input[type="checkbox"]:checked::before { transform: translateX(20px); }
 .mode-selector { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; background: var(--subtle-bg-color); padding: 10px; border-radius: 8px; }
 #current-number { 
     font-family: var(--board-font); 
-    font-size: 8rem; /* Made bigger */
+    font-size: 6rem; 
     font-weight: bold; 
     color: var(--danger-color); 
     background-color: var(--subtle-bg-color); 
     border-radius: 50%; 
-    width: 160px; /* Made bigger */
-    height: 160px; /* Made bigger */
+    width: 140px; 
+    height: 140px; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    margin: 25px auto; /* Adjusted margin */
+    margin: 25px auto;
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); 
 }
 .auto-draw-controls { display: flex; gap: 10px; align-items: baseline; margin-top: 20px; justify-content: center; }
-.auto-draw-controls.bottom-controls { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-color); } /* Added for bottom position */
+.auto-draw-controls.bottom-controls { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-color); }
 #auto-draw-time { width: 80px; text-align: center; margin-bottom: 0; }
 .game-controls { display: flex; justify-content: center; margin-top: 20px; }
 .game-controls .big-draw-button {
     padding: 20px 40px;
     font-size: 1.8rem;
     border-radius: 15px;
-    width: 80%; /* Make it wider */
-    max-width: 300px; /* Limit max width */
+    width: 80%;
+    max-width: 300px;
     margin: 0;
 }
 .undo-control {
@@ -101,17 +101,17 @@ input[type="checkbox"]:checked::before { transform: translateX(20px); }
 
 
 .tambola-board-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-#tambola-board { border-collapse: collapse; margin: 25px auto 0; /* Adjusted margin */ width: 100%; min-width: 340px; /* Made bigger */ }
-#tambola-board td { border: 1px solid var(--border-color); width: 10%; height: 36px; /* Made taller */ text-align: center; font-size: 0.95rem; /* Made bigger */ font-weight: 500; font-family: var(--board-font); }
+#tambola-board { border-collapse: collapse; margin: 25px auto 0; width: 100%; min-width: 340px; }
+#tambola-board td { border: 1px solid var(--border-color); width: 10%; height: 36px; text-align: center; font-size: 0.95rem; font-weight: 500; font-family: var(--board-font); }
 #tambola-board td.called { background-color: var(--primary-color); color: var(--card-bg-color); text-decoration: line-through; }
-#called-numbers-list { padding: 10px; background-color: var(--subtle-bg-color); border-radius: 8px; min-height: 55px; /* Made taller */ word-wrap: break-word; border: 1px dashed var(--border-color); margin-top: 15px; /* Adjusted margin */ font-size: 1.1rem; /* Made bigger */ }
+#called-numbers-list { padding: 10px; background-color: var(--subtle-bg-color); border-radius: 8px; min-height: 55px; word-wrap: break-word; border: 1px dashed var(--border-color); margin-top: 15px; font-size: 1.1rem; }
 #called-numbers-list span { display: inline-block; margin: 3px 6px; padding: 4px 8px; background-color: var(--primary-color); color: white; border-radius: 5px; font-size: 1rem; font-weight: 500; }
-.game-card { margin-bottom: 20px; }
+.game-card { margin-bottom: 20px; display: flex; flex-direction: column; }
+.game-card .tambola-board-container { flex-grow: 1; } /* Allow board to take space */
 
 .prize-item { display: flex; align-items: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid var(--border-color); transition: background-color 0.3s; }
 .prize-item:last-of-type { border-bottom: none; }
 .prize-item .prize-name { font-weight: bold; font-size: 1.1rem; text-align: left; flex-grow: 1; }
-.prize-item .prize-details { display: flex; align-items: center; gap: 10px; }
 .prize-item .weight-container { display: none; align-items: center; gap: 5px; }
 .prizes-card.auto-mode .weight-container { display: flex; }
 .weight-input { width: 50px; text-align: center; padding: 8px; margin-bottom: 0; }
@@ -119,14 +119,14 @@ input[type="checkbox"]:checked::before { transform: translateX(20px); }
 .prize-item .prize-actions { display: flex; gap: 10px; }
 .prize-actions button { flex-grow: 1; padding: 10px 5px; font-size: 0.9rem; }
 .prize-actions .icon-btn-small { background: var(--subtle-bg-color); color: var(--text-color); font-size: 1.1rem; flex-grow: 0; width: 50px; margin: 0; }
-.prize-item.claimed { background-color: var(--claimed-bg-color); color: var(--claimed-text-color); opacity: 1; }
+.prize-item.claimed { background-color: var(--claimed-bg-color); color: var(--claimed-text-color); opacity: 1; border-radius: 8px; padding-left: 10px; padding-right: 10px; }
 .prize-item.claimed .prize-name { text-decoration: line-through; }
 .prize-item.claimed .claim-btn { background-color: var(--success-color); color: white; }
 
 #add-prize-form { display: flex; gap: 10px; margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); }
 #add-prize-btn { flex-shrink: 0; }
 #manual-total-display { font-weight: bold; text-align: right; margin-top: 15px; font-size: 1.2rem; color: var(--header-color); }
-.verification-controls { display: flex; justify-content: center; gap: 10px; margin-top: 15px; } /* Aligned buttons */
+.verification-controls { display: flex; justify-content: center; gap: 10px; margin-top: 15px; } 
 #verify-result .num { display: inline-block; margin: 4px 5px; padding: 5px 8px; border-radius: 5px; font-weight: bold; font-size: 0.9rem; }
 #verify-result .num.called { background-color: var(--success-color); color: white; }
 #verify-result .num.not-called { background-color: var(--error-color); color: white; }
@@ -139,3 +139,25 @@ input[type="checkbox"]:checked::before { transform: translateX(20px); }
 .tab-pane { display: none; }
 .tab-pane.active { display: block; animation: fadeIn 0.5s; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* Responsive Adjustments for Short Screens */
+@media (max-height: 740px) {
+    #current-number {
+        width: 120px;
+        height: 120px;
+        font-size: 5rem;
+        margin: 15px auto;
+    }
+    .game-controls .big-draw-button {
+        padding: 15px 30px;
+        font-size: 1.5rem;
+    }
+    #tambola-board td {
+        height: 30px;
+        font-size: 0.8rem;
+    }
+    #called-numbers-list {
+        min-height: 40px;
+        padding: 8px;
+    }
+}
