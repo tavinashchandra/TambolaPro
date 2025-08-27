@@ -80,12 +80,10 @@ function renderPrizes() {
         const item = document.createElement('div');
         item.className = 'prize-item';
         if (prize.claimed) item.classList.add('claimed');
-        
         const isReadOnly = calculationMode === 'auto' ? 'readonly' : '';
-        const isDisabled = prize.claimed ? 'disabled' : ''; // Disable inputs/buttons if claimed
-        
+        const isDisabled = prize.claimed ? 'disabled' : '';
         const claimBtnTxt = prize.claimed ? 'Unclaim' : 'Claim';
-        const claimBtnClass = prize.claimed ? 'unclaim primary-btn' : ''; // Style claimed button
+        const claimBtnClass = prize.claimed ? 'unclaim primary-btn' : '';
 
         item.innerHTML = `
             <span class="prize-name">${prize.name}</span>
@@ -106,7 +104,7 @@ function renderPrizes() {
         prizeListContainer.appendChild(item);
     });
     if (calculationMode === 'manual') updateManualTotal();
-    updateUIVisibility(); // Ensure correct visibility after rendering
+    updateUIVisibility();
 }
 function handlePrizeListEvents(event) {
     const target = event.target.closest('button, input');
@@ -166,7 +164,6 @@ function loadSavedState() {
     
     totalCollectionDisplay.innerHTML = `Total Prize Pool: <strong>₹${totalPrizePool || 0}</strong>`; 
     
-    // Ensure UI is updated based on loaded mode before rendering prizes
     updateUIVisibility(); 
     renderPrizes(); 
 
@@ -189,7 +186,15 @@ function drawNumber() { if (availableNumbers.length === 0) { stopAutoDraw(); ret
 function undoLastNumber() { stopAutoDraw(); if (drawHistory.length === 0) return; const lastNumber = drawHistory.pop(); calledNumbers = calledNumbers.filter(n => n !== lastNumber); availableNumbers.push(lastNumber); document.getElementById(`cell-${lastNumber}`).classList.remove('called'); updateCalledNumbersList(); const newLast = drawHistory.length > 0 ? drawHistory[drawHistory.length - 1] : '--'; currentNumberDisplay.textContent = newLast; if (drawHistory.length === 0) undoButton.disabled = true; drawButton.disabled = false; saveGameState(); }
 function verifyClaim() { const numbersText = verifyNumbersInput.value; const numbersToVerify = numbersText.match(/\d+/g); verifyResultDiv.innerHTML = ''; if (!numbersToVerify || numbersToVerify.length === 0) { verifyResultDiv.innerHTML = '<p class="subtle-text">Please enter some numbers to verify.</p>'; return; } let allCalled = true; let resultHTML = '<h4>Verification Result:</h4>'; numbersToVerify.forEach(numStr => { const num = parseInt(numStr); let statusClass = 'not-called'; let statusText = '(Not Called)'; if (calledNumbers.includes(num)) { statusClass = 'called'; statusText = '(Called)'; } else { allCalled = false; } resultHTML += `<span class="num ${statusClass}">${num} ${statusText}</span>`; }); let finalMessage = allCalled ? '<h4 style="color: var(--success-color);">✔️ VALID CLAIM!</h4>' : '<h4 style="color: var(--error-color);">❌ INVALID CLAIM!</h4>'; verifyResultDiv.innerHTML = finalMessage + resultHTML; }
 function resetVerification() { verifyNumbersInput.value = ''; verifyResultDiv.innerHTML = ''; }
-function updateCalledNumbersList() { calledNumbersList.innerHTML = ''; calledNumbers.sort((a, b) => a - b).forEach(num => { const s = document.createElement('span'); s.textContent = num; calledNumbersList.appendChild(s); }); }
+function updateCalledNumbersList() {
+    calledNumbersList.innerHTML = '';
+    // FIX: Removed .sort() to show numbers in draw order
+    calledNumbers.forEach(num => {
+        const s = document.createElement('span');
+        s.textContent = num;
+        calledNumbersList.appendChild(s);
+    });
+}
 function saveGameState() { localStorage.setItem('calledNumbers', JSON.stringify(calledNumbers)); localStorage.setItem('availableNumbers', JSON.stringify(availableNumbers)); localStorage.setItem('drawHistory', JSON.stringify(drawHistory)); }
 function handleAutoDraw() {
     if (autoDrawIntervalId) {
