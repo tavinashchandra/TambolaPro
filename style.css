@@ -25,10 +25,10 @@ body {
     font-family: var(--main-font); background-color: var(--bg-color); color: var(--text-color); margin: 0; padding: 0; display: flex; justify-content: center; min-height: 100vh; transition: background-color 0.3s, color 0.3s; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
 }
 .app-container {
-    background: var(--app-bg-color); width: 100%; max-width: 500px; margin: 0 auto; box-shadow: var(--shadow); min-height: 100vh; display: flex; flex-direction: column; padding-bottom: 70px;
+    background: var(--app-bg-color); width: 100%; max-width: 500px; margin: 0 auto; box-shadow: var(--shadow); min-height: 100vh; display: flex; flex-direction: column; padding-bottom: 65px; /* Space for the tab bar */ box-sizing: border-box;
 }
 .main-content {
-    flex: 1; padding: 10px 15px;
+    flex: 1; padding: 10px 15px; display: flex; flex-direction: column;
 }
 .app-header {
     background-color: var(--primary-color); color: white; padding: 0 20px; text-align: center; box-shadow: var(--shadow); position: sticky; top: 0; z-index: 100; display: flex; justify-content: center; align-items: center; height: 60px;
@@ -62,58 +62,65 @@ input[type="checkbox"]:checked::before { transform: translateX(20px); }
 .calc-inputs div { text-align: left; }
 #total-collection { font-size: 1.2rem; font-weight: bold; margin-top: 15px; text-align: center; color: var(--primary-color); }
 .mode-selector { display: flex; justify-content: center; gap: 20px; margin-bottom: 20px; background: var(--subtle-bg-color); padding: 10px; border-radius: 8px; }
+
+/* --- RESPONSIVE GAME PANE STYLES --- */
+.game-card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Allows the card to fill the pane height */
+    padding-bottom: 15px;
+}
 #current-number { 
     font-family: var(--board-font); 
-    font-size: 8rem; 
+    font-size: 6.5rem; 
     font-weight: bold; 
     color: var(--danger-color); 
     background-color: var(--subtle-bg-color); 
     border-radius: 50%; 
-    width: 160px; 
-    height: 160px; 
+    width: 140px; 
+    height: 140px; 
     display: flex; 
     justify-content: center; 
     align-items: center; 
-    margin: 25px auto;
+    margin: 15px auto;
     box-shadow: inset 0 2px 5px rgba(0,0,0,0.1); 
+    flex-shrink: 0; /* Prevents this from shrinking */
 }
-.auto-draw-controls { display: flex; gap: 10px; align-items: baseline; margin-top: 20px; justify-content: center; }
-.auto-draw-controls.bottom-controls { margin-top: 25px; padding-top: 20px; border-top: 1px solid var(--border-color); }
-#auto-draw-time { width: 80px; text-align: center; margin-bottom: 0; }
-.game-controls { display: flex; justify-content: center; margin-top: 20px; }
+.auto-draw-controls { display: flex; gap: 10px; align-items: baseline; justify-content: center; }
+#auto-draw-time { width: 70px; text-align: center; margin-bottom: 0; }
+.game-controls { display: flex; justify-content: center; margin-top: 15px; }
 .game-controls .big-draw-button {
-    padding: 20px 40px;
-    font-size: 1.8rem;
-    border-radius: 15px;
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    border-radius: 12px;
     width: 80%;
-    max-width: 300px;
+    max-width: 280px;
     margin: 0;
 }
 .undo-control {
     text-align: center;
-    margin-top: 15px;
+    margin-top: 10px;
 }
-.undo-control .secondary-action-btn {
-    width: auto;
-    padding: 10px 20px;
-    font-size: 1rem;
+.tambola-board-container { 
+    overflow-x: auto; 
+    -webkit-overflow-scrolling: touch; 
+    flex-grow: 1; /* Allows board to take up remaining space */
+    display: flex;
+    align-items: center; /* Center the board vertically in its container */
 }
-
-
-.tambola-board-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-#tambola-board { border-collapse: collapse; margin: 25px auto 0; width: 100%; min-width: 340px; }
-#tambola-board td { border: 1px solid var(--border-color); width: 10%; height: 36px; text-align: center; font-size: 0.95rem; font-weight: 500; font-family: var(--board-font); }
+#tambola-board { border-collapse: collapse; margin: 15px auto 0; width: 100%; min-width: 320px; }
+#tambola-board td { border: 1px solid var(--border-color); width: 10%; height: 32px; text-align: center; font-size: 0.9rem; font-weight: 500; font-family: var(--board-font); }
 #tambola-board td.called { background-color: var(--primary-color); color: var(--card-bg-color); text-decoration: line-through; }
 #called-numbers-container { text-align: center; }
 #called-numbers-list { 
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    padding: 10px; 
+    gap: 8px;
+    padding: 8px; 
     background-color: transparent; 
     border-radius: 8px; 
-    min-height: 40px; 
+    min-height: 35px; 
     margin-top: 10px; 
     border: none;
 }
@@ -121,12 +128,12 @@ input[type="checkbox"]:checked::before { transform: translateX(20px); }
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background-color: var(--subtle-bg-color); 
     color: var(--subtle-text-color); 
     border-radius: 50%;
-    font-size: 1rem; 
+    font-size: 0.9rem; 
     font-weight: 700;
     font-family: var(--board-font);
     transition: all 0.3s ease;
@@ -136,9 +143,6 @@ input[type="checkbox"]:checked::before { transform: translateX(20px); }
     color: white;
     transform: scale(1.1);
 }
-
-.game-card { margin-bottom: 20px; display: flex; flex-direction: column; }
-.game-card .tambola-board-container { flex-grow: 1; } 
 
 .prize-item { display: flex; align-items: center; gap: 10px; padding: 15px 0; border-bottom: 1px solid var(--border-color); transition: background-color 0.3s; }
 .prize-item:last-of-type { border-bottom: none; }
@@ -167,28 +171,6 @@ input[type="checkbox"]:checked::before { transform: translateX(20px); }
 .tab-bar { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; height: 65px; background: var(--card-bg-color); display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); border-top: 1px solid var(--border-color); z-index: 100; }
 .tab-btn { background: none; border: none; color: var(--subtle-text-color); font-weight: 500; font-size: 0.8rem; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 5px; flex-grow: 1; height: 100%; border-radius: 0; border-top: 3px solid transparent; }
 .tab-btn.active { color: var(--primary-color); font-weight: 700; border-top: 3px solid var(--primary-color); }
-.tab-pane { display: none; }
-.tab-pane.active { display: block; animation: fadeIn 0.5s; }
+.tab-pane { display: none; height: 100%; }
+.tab-pane.active { display: flex; flex-direction: column; height: 100%; animation: fadeIn 0.5s; }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-/* Responsive Adjustments for Short Screens */
-@media (max-height: 740px) {
-    #current-number {
-        width: 120px;
-        height: 120px;
-        font-size: 5rem;
-        margin: 15px auto;
-    }
-    .game-controls .big-draw-button {
-        padding: 15px 30px;
-        font-size: 1.5rem;
-    }
-    #tambola-board td {
-        height: 30px;
-        font-size: 0.8rem;
-    }
-    #called-numbers-list {
-        min-height: 40px;
-        padding: 8px;
-    }
-}
