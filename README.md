@@ -7,41 +7,46 @@
 The ultimate all-in-one web application for hosting Tambola (Housie) games right from your browser. This is a complete, single-file, and fully responsive app designed for a seamless mobile experience. This project is open-source under the MIT license, which means you are free to use and modify it, provided you give credit.
 ---
 
-## 🚀 Key Features
+# Tambola Pro
 
-This app has been built from the ground up to be a complete hosting solution with a focus on a professional, mobile-first UI.
+A modern, simple, and feature-rich Tambola (Indian Bingo) game manager. This web application helps you host a game of Tambola with a sleek user interface, automated number calling, and prize management.
 
-#### **Game & Number Calling**
-* **🎙️ Voice Announcer:** Numbers are called out loud with a clear voice, with a mute toggle in settings.
-* **⏱️ Auto-Draw with Pause:** Set a timer to automatically draw numbers at a chosen interval.
-* **↩️ Undo Function:** Easily take back the last number called in case of a mistake.
-* **BOARD:** A clear, responsive Tambola board that automatically marks called numbers.
+## Features ✨
 
-#### **Advanced Prize Management**
-* **💰 Prize Pool Calculator:** Automatically calculate the total prize money from ticket sales.
-* **⚖️ Weighted Auto-Distribution:** In Auto mode, the prize pool is intelligently distributed based on "weights" you assign to each prize (e.g., Full Housie gets more than a Line).
-* **✍️ Manual Mode:** Switch to Manual mode to set specific prize amounts yourself.
-* **📋 Full Prize Control:** Easily add, delete, and **duplicate** prizes on the fly.
-* **🔒 Claim & Lock:** When a prize is claimed, it's highlighted in green and its inputs are locked to prevent accidental changes.
+* **Prize Money Calculator**: Easily calculate the total prize pool based on ticket sales and entry fees.
+* **Manual Prize Management**: Define and manage prizes with custom amounts. The app keeps a running total of all prize money.
+* **Game Management**:
+    * **Draw Numbers**: Manually draw numbers with a single click.
+    * **Auto-Draw**: Set an interval for the app to automatically draw numbers.
+    * **Undo Functionality**: Made a mistake? Undo the last called number to correct it.
+* **Winner Verification**: A quick tool to verify a player's claim by checking if all their numbers have been called.
+* **Accessibility & Customization**:
+    * **Voice Announcements**: The app can announce the called numbers in English or Telugu (if a voice pack is installed on your device).
+    * **Theme Options**: Choose from a variety of color themes, including Light, Dark, Sunset, and more.
+    * **Font Styles**: Customize the app's look with different font options.
 
-#### **Hosting & Customization Tools**
-* **✔️ Winner Verification:** An integrated tool to quickly check if a player's prize claim is valid.
-* **🎨 Full Appearance Customization:**
-    * **10+ Color Themes:** Includes Light, Dark, Sunset, Ocean Breeze, and High Contrast modes.
-    * **8+ Font Styles:** Choose from modern, classic, and system fonts to personalize the look.
-* **💾 Persistent State:** Your entire game setup—prizes, modes, and appearance settings—is automatically saved in your browser.
+## Getting Started 🚀
 
----
+To run this application locally, you just need a web browser.
 
-## 🛠️ How to Use
+1.  **Clone the repository or download the files:**
+    Download the `index.html`, `style.css`, and `script.js` files.
 
-This is a serverless, single-page application. No installation is required!
+2.  **Open the application:**
+    Open the `index.html` file in your preferred web browser (e.g., Chrome, Firefox, Edge).
 
-1.  **Download:** Clone this repository or download the ZIP file.
-2.  **Open:** Unzip the folder and open the `index.html` file in any modern web browser.
-3.  **Host!** Start your game.
+3.  **Start a Game:**
+    * Navigate to the "Setup & Prizes" tab.
+    * Enter the Entry Fee and Number of Tickets Sold to calculate the prize pool.
+    * Define your prizes and their amounts. The total will update automatically.
+    * Switch to the "Game" tab to start drawing numbers!
 
----
+## Technology Stack 💻
+
+* **HTML5**: For the application's structure.
+* **CSS3**: For all styling and theme management.
+* **JavaScript**: For all game logic, state management, and API integrations (e.g., Web Speech API).
+
 
 ## 💻 Tech Stack
 
@@ -50,6 +55,11 @@ This is a serverless, single-page application. No installation is required!
 * **Vanilla JavaScript (ES6+)**
 
 This project is built with zero dependencies or frameworks, keeping it lightweight and fast.
+
+## Contribution
+
+Coded with ❤️ By Avinash Chandra
+![Avinash Chandra's Photo](https://avatars.githubusercontent.com/u/119234711?v=4)
 
 ---
 
