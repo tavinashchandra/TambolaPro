@@ -47,13 +47,6 @@ To run this application locally, you just need a web browser.
 * **CSS3**: For all styling and theme management.
 * **JavaScript**: For all game logic, state management, and API integrations (e.g., Web Speech API).
 
-
-## 💻 Tech Stack
-
-* **HTML5**
-* **CSS3** (Flexbox, Grid, CSS Variables for robust theming)
-* **Vanilla JavaScript (ES6+)**
-
 This project is built with zero dependencies or frameworks, keeping it lightweight and fast.
 
 ## Contribution
