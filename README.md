@@ -59,6 +59,8 @@ This project is built with zero dependencies or frameworks, keeping it lightweig
 ## Contribution
 
 Coded with ❤️ By Avinash Chandra
+<br>
+<br>
 ![Avinash Chandra's Photo](https://lh3.googleusercontent.com/a/ACg8ocK_sVML1Uy3xHPPdkO63ZNk2WVPWcbY2wk-7gE6M5B6eg7Vo8V-7Q=s96-c)
 
 ---
