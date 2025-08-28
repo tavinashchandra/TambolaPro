@@ -1,4 +1,4 @@
-# Tambola Pro - By Nash 🎲
+# Tambola Pro 🎲
 
 ![Status: Maintained](https://img.shields.io/badge/status-maintained-green.svg)
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
