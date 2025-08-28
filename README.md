@@ -11,6 +11,14 @@ The ultimate all-in-one web application for hosting Tambola (Housie) games right
 
 A modern, simple, and feature-rich Tambola (Indian Bingo) game manager. This web application helps you host a game of Tambola with a sleek user interface, automated number calling, and prize management.
 
+<div style="display: flex; flex-wrap: nowrap; gap: 10px; justify-content: center; align-items: flex-start;">
+  <img width="286" height="593" alt="chrome_ViYeuwpoPd" src="https://github.com/user-attachments/assets/0c048d4d-7fd1-4124-8195-c6cc6e1a5571" />
+  <img width="286" height="593" alt="chrome_J45OZLC9r6" src="https://github.com/user-attachments/assets/8694fb10-6eb9-4379-b334-675798042172" />
+  <img width="286" height="593" alt="chrome_Qq2eaCwLCC" src="https://github.com/user-attachments/assets/3dba366a-952e-4e94-af6a-3c1b633b4ff6" />
+  <img width="286" height="593" alt="chrome_U2hTrj5iy1" src="https://github.com/user-attachments/assets/6f7dd43d-576e-48db-a7cf-5f90482c3bd8" />
+</div>
+
+
 ## Features ✨
 
 * **Prize Money Calculator**: Easily calculate the total prize pool based on ticket sales and entry fees.
