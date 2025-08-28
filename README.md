@@ -49,12 +49,6 @@ To run this application locally, you just need a web browser.
 
 This project is built with zero dependencies or frameworks, keeping it lightweight and fast.
 
-## Contribution
-
-![Avinash Chandra's Photo](https://lh3.googleusercontent.com/a/ACg8ocK_sVML1Uy3xHPPdkO63ZNk2WVPWcbY2wk-7gE6M5B6eg7Vo8V-7Q=s96-c)
-<br>
-Coded with ❤️ By Avinash Chandra
-
 ---
 
 ## 📜 License
@@ -64,5 +58,6 @@ This project is licensed under the **MIT License**.
 This means you are free to use, copy, modify, merge, publish, and distribute this project for personal or commercial use. The only requirement is that you **must include the original copyright notice** (found in the `LICENSE` file) in any copies or substantial portions of the software.
 
 ---
-
+![Avinash Chandra's Photo](https://lh3.googleusercontent.com/a/ACg8ocK_sVML1Uy3xHPPdkO63ZNk2WVPWcbY2wk-7gE6M5B6eg7Vo8V-7Q=s96-c)
+<br>
 ### Coded with ❤️ by **Avinash Chandra**.
