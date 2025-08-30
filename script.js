@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const prizeListContainer = document.getElementById('prize-list');
     const manualTotalDisplay = document.getElementById('manual-total-display');
     const prizesTotalBanner = document.getElementById('prizes-total-banner');
-    const modeSelectors = document.querySelectorAll('input[name="prize-mode"]');
     const synth = window.speechSynthesis;
     const undoButton = document.getElementById('undo-button');
     const verifyBtn = document.getElementById('verify-btn');
@@ -29,25 +28,35 @@ document.addEventListener('DOMContentLoaded', () => {
     const tabPanes = document.querySelectorAll('.tab-pane');
     const autoDrawBtn = document.getElementById('auto-draw-btn');
     const autoDrawTimeInput = document.getElementById('auto-draw-time');
+    
+    const historyButton = document.getElementById('history-button');
+    const historyModal = document.getElementById('history-modal');
+    const modalCloseBtn = document.getElementById('modal-close-btn');
+    const historyListContainer = document.getElementById('history-list');
+    const voiceSpeedSlider = document.getElementById('voice-speed');
+    const voiceSpeedValue = document.getElementById('voice-speed-value');
+    const voicePitchSlider = document.getElementById('voice-pitch');
+    const voicePitchValue = document.getElementById('voice-pitch-value');
+    const repeatButton = document.getElementById('repeat-button');
+
 
     // --- GAME STATE ---
     let voices = [];
     let availableNumbers = [], calledNumbers = [], prizes = [], drawHistory = [];
     let totalPrizePool = 0;
-    let calculationMode = 'manual';
     let voiceEnabled = true;
     let autoDrawIntervalId = null;
     const defaultPrizes = [ 
-        { id: 'early_5', name: 'Early 5', weight: 1, claimed: false, winner: '', amount: 25 }, 
-        { id: 'first_line', name: 'First Line', weight: 2, claimed: false, winner: '', amount: 50 }, 
-        { id: 'second_line', name: 'Second Line', weight: 2, claimed: false, winner: '', amount: 50 }, 
-        { id: 'third_line', name: 'Third Line', weight: 2, claimed: false, winner: '', amount: 50 }, 
-        { id: 'full_housie_1', name: 'Full Housie (1)', weight: 4, claimed: false, winner: '', amount: 100 }
+        { id: 'early_5', name: 'Early 5', claimed: false, amount: 0 }, 
+        { id: 'first_line', name: 'First Line', claimed: false, amount: 0 }, 
+        { id: 'second_line', name: 'Second Line', claimed: false, amount: 0 }, 
+        { id: 'third_line', name: 'Third Line', claimed: false, amount: 0 }, 
+        // --- FIX 1: Renamed "Full Housie" to "Full Housie (1)" by default ---
+        { id: 'full_housie_1', name: 'Full Housie (1)', claimed: false, amount: 0 }
     ];
 
     // --- Core Functions ---
 
-    // Uses Cryptographically Secure Random Number Generator for fair draws
     function getRandomInt(max) {
         const randomBuffer = new Uint32Array(1);
         window.crypto.getRandomValues(randomBuffer);
@@ -55,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
         return Math.floor(randomNumber * max);
     }
     
-    // Populates the voice dropdown in settings with English and Telugu voices
     function populateVoiceList() {
         voices = synth.getVoices().filter(voice => voice.lang.startsWith('en') || voice.lang.startsWith('te'));
         const selectedVoiceURI = localStorage.getItem('tambolaVoiceURI');
@@ -93,16 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleVoiceToggle(event) { voiceEnabled = event.target.checked; localStorage.setItem('tambolaVoiceEnabled', voiceEnabled); }
     
     function updateUIVisibility() {
-        const prizesCard = document.querySelector('.prizes-card');
-        if (prizesCard) {
-            prizesCard.classList.add('manual-mode'); 
-            prizesCard.classList.remove('auto-mode');
-            manualTotalDisplay.style.display = 'block';
-        }
-        const modeSelectorDiv = document.getElementById('prize-mode-selector');
-        if (modeSelectorDiv) {
-            modeSelectorDiv.style.display = 'none';
-        }
+        manualTotalDisplay.style.display = 'block';
     }
 
     function calculatePrizePool() { 
@@ -120,24 +119,14 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleAddPrize() { 
         const name = newPrizeNameInput.value.trim(); 
         if (name) { 
-            prizes.push({ id: Date.now().toString(), name, weight: 0, claimed: false, winner: '', amount: 0 }); 
+            prizes.push({ id: Date.now().toString(), name, claimed: false, amount: 0 }); 
             newPrizeNameInput.value = ''; 
             savePrizesAndRender();
         } 
     }
     
-    function redistributeAndRender() { 
-        savePrizesAndRender(); 
-    }
-    
     function updateManualTotal() { 
-        let manualTotal = 0; 
-        prizes.forEach(prize => { 
-            const amount = parseFloat(prize.amount);
-            if (!isNaN(amount)) { 
-                manualTotal += amount; 
-            } 
-        }); 
+        let manualTotal = prizes.reduce((total, prize) => total + (parseFloat(prize.amount) || 0), 0);
         manualTotalDisplay.textContent = `Total Prize Money: ₹${manualTotal}`;
         prizesTotalBanner.textContent = `Total Prize Money: ₹${manualTotal}`;
     }
@@ -150,14 +139,16 @@ document.addEventListener('DOMContentLoaded', () => {
             if (prize.claimed) item.classList.add('claimed');
             const isDisabled = prize.claimed ? 'disabled' : '';
             const claimBtnTxt = prize.claimed ? 'Unclaim' : 'Claim';
-            
+            const prizeNameDisplay = prize.claimed ? `${prize.name} ✔️` : prize.name;
+            const claimBtnClass = prize.claimed ? 'is-claimed' : '';
+
             item.innerHTML = `
-                <span class="prize-name">${prize.name}</span>
+                <span class="prize-name">${prizeNameDisplay}</span>
                 <div class="prize-details">
                     <input type="text" inputmode="numeric" pattern="[0-9]*" data-id="${prize.id}" class="amount-input" value="${prize.amount}" placeholder="₹" ${isDisabled}>
                 </div>
                 <div class="prize-actions">
-                    <button class="claim-btn primary-btn" data-id="${prize.id}">${claimBtnTxt}</button>
+                    <button class="claim-btn primary-btn ${claimBtnClass}" data-id="${prize.id}">${claimBtnTxt}</button>
                     <button class="icon-btn-small duplicate-btn" data-id="${prize.id}" title="Duplicate Prize" ${isDisabled}>📋</button>
                     <button class="icon-btn-small delete-btn" data-id="${prize.id}" title="Delete Prize" ${isDisabled}>🗑️</button>
                 </div>
@@ -187,8 +178,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const baseName = prize.name.replace(/ \(\d+\)$/, '');
             const existingCopies = prizes.filter(p => p.name.startsWith(baseName)).length;
             const newName = `${baseName} (${existingCopies + 1})`;
-            const newPrize = { ...prize, id: Date.now().toString(), name: newName };
-            prizes.push(newPrize);
+            prizes.push({ ...prize, id: Date.now().toString(), name: newName, claimed: false });
             savePrizesAndRender();
         } else if (target.classList.contains('amount-input')) {
             if (event.type === 'change') {
@@ -209,6 +199,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function initializeGame() { 
+        if (!confirm("Are you sure you want to reset everything? This cannot be undone.")) return;
         stopAutoDraw(); 
         if (synth.speaking) synth.cancel(); 
         availableNumbers = Array.from({ length: 90 }, (_, i) => i + 1); 
@@ -218,6 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         calledNumbersList.innerHTML = ''; 
         drawButton.disabled = false; 
         undoButton.disabled = true; 
+        repeatButton.disabled = true;
         initializeBoard(); 
         entryFeeInput.value = ''; 
         ticketsSoldInput.value = ''; 
@@ -225,10 +217,8 @@ document.addEventListener('DOMContentLoaded', () => {
         totalPrizePool = 0; 
         prizes = JSON.parse(JSON.stringify(defaultPrizes)); 
         localStorage.clear(); 
-        calculationMode = 'manual';
-        document.getElementById('manual-mode').checked = true; 
-        document.querySelectorAll('.mode-selector label').forEach(label => label.classList.remove('selected'));
-        document.getElementById('manual-mode').parentElement.classList.add('selected');
+        applyFont(fontSelector.value);
+        applyTheme(themeSelector.value);
         updateUIVisibility(); 
         renderPrizes(); 
         resetVerification(); 
@@ -240,21 +230,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const savedFont = localStorage.getItem('tambolaFont');
         const savedTheme = localStorage.getItem('tambolaTheme');
         const savedVoice = localStorage.getItem('tambolaVoiceEnabled');
+        const savedSpeed = localStorage.getItem('tambolaVoiceSpeed');
+        const savedPitch = localStorage.getItem('tambolaVoicePitch');
 
         prizes = savedPrizes || JSON.parse(JSON.stringify(defaultPrizes));
         if (savedPool) totalPrizePool = savedPool;
 
-        calculationMode = 'manual';
-        const manualModeRadio = document.getElementById('manual-mode');
-        if (manualModeRadio) {
-            manualModeRadio.checked = true;
-            manualModeRadio.parentElement.classList.add('selected');
-        }
-
-
-        if (savedFont) { applyFont(savedFont); fontSelector.value = savedFont; } else { applyFont(fontSelector.value); }
-        if (savedTheme) { applyTheme(savedTheme); themeSelector.value = savedTheme; } else { applyTheme(themeSelector.value); }
+        if (savedFont) { applyFont(savedFont); fontSelector.value = savedFont; }
+        if (savedTheme) { applyTheme(savedTheme); themeSelector.value = savedTheme; }
         if (savedVoice !== null) { voiceEnabled = savedVoice === 'true'; voiceToggle.checked = voiceEnabled; }
+        if (savedSpeed) { voiceSpeedSlider.value = savedSpeed; voiceSpeedValue.textContent = savedSpeed; }
+        if (savedPitch) { voicePitchSlider.value = savedPitch; voicePitchValue.textContent = savedPitch; }
 
         totalCollectionDisplay.innerHTML = `Total Prize Pool: <strong>₹${totalPrizePool || 0}</strong>`;
         updateUIVisibility();
@@ -268,22 +254,12 @@ document.addEventListener('DOMContentLoaded', () => {
             currentNumberDisplay.textContent = drawHistory.length > 0 ? drawHistory[drawHistory.length - 1] : '--';
             drawButton.disabled = availableNumbers.length === 0;
             undoButton.disabled = drawHistory.length === 0;
+            repeatButton.disabled = drawHistory.length === 0;
 
             calledNumbers.forEach(num => {
                 const cell = document.getElementById(`cell-${num}`);
                 if (cell) cell.classList.add('called');
             });
-            if (drawHistory.length > 0) {
-                const latestNum = drawHistory[drawHistory.length - 1];
-                calledNumbers.forEach(num => {
-                    const cell = document.getElementById(`cell-${num}`);
-                    if (cell) {
-                        cell.classList.add('called');
-                        cell.style.opacity = (num === latestNum) ? '1.0' : '0.5';
-                    }
-                });
-            }
-
         } else {
             availableNumbers = Array.from({ length: 90 }, (_, i) => i + 1);
             calledNumbers = [];
@@ -294,16 +270,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const cell = document.getElementById(`cell-${num}`);
             if (cell) cell.classList.add('called');
         });
-        if (drawHistory.length > 0) {
-            const latestNum = drawHistory[drawHistory.length - 1];
-            calledNumbers.forEach(num => {
-                const cell = document.getElementById(`cell-${num}`);
-                if (cell) {
-                    cell.classList.add('called');
-                    cell.style.opacity = (num === latestNum) ? '1.0' : '0.5';
-                }
-            });
-        }
     }
     
     function initializeBoard() { 
@@ -319,6 +285,23 @@ document.addEventListener('DOMContentLoaded', () => {
         } 
     }
     
+    function speakNumber(num) {
+        if (!voiceEnabled) return;
+        if (voices.length === 0) {
+            populateVoiceList();
+        }
+        if (synth.speaking) synth.cancel(); 
+        const u = new SpeechSynthesisUtterance(num.toString());
+        const selectedVoiceURI = voiceSelector.value || localStorage.getItem('tambolaVoiceURI');
+        const selectedVoice = voices.find(voice => voice.voiceURI === selectedVoiceURI);
+        if (selectedVoice) {
+            u.voice = selectedVoice;
+        }
+        u.rate = parseFloat(voiceSpeedSlider.value);
+        u.pitch = parseFloat(voicePitchSlider.value);
+        synth.speak(u); 
+    }
+
     function drawNumber() { 
         if (availableNumbers.length === 0) { 
             stopAutoDraw(); 
@@ -331,27 +314,21 @@ document.addEventListener('DOMContentLoaded', () => {
         drawHistory.push(num); 
         currentNumberDisplay.textContent = num; 
         
-        const prevCalledCells = document.querySelectorAll('.tambola-board td.called');
-        prevCalledCells.forEach(cell => cell.style.opacity = '0.5');
-        
         const currentCell = document.getElementById(`cell-${num}`);
         if(currentCell) {
             currentCell.classList.add('called');
-            currentCell.style.opacity = '1.0';
+            currentCell.classList.add('just-called');
+            setTimeout(() => {
+                currentCell.classList.remove('just-called');
+            }, 600);
         }
         
         updateCalledNumbersList(); 
         undoButton.disabled = false; 
-        if (voiceEnabled) { 
-            if (synth.speaking) synth.cancel(); 
-            const u = new SpeechSynthesisUtterance(num.toString());
-            const selectedVoiceURI = voiceSelector.value || localStorage.getItem('tambolaVoiceURI');
-            if (selectedVoiceURI) {
-                u.voice = voices.find(voice => voice.voiceURI === selectedVoiceURI);
-            }
-            u.rate = 0.9;
-            synth.speak(u); 
-        } 
+        repeatButton.disabled = false;
+        
+        speakNumber(num);
+
         if (availableNumbers.length === 0) { 
             currentNumberDisplay.textContent = 'End'; 
             drawButton.disabled = true; 
@@ -364,25 +341,23 @@ document.addEventListener('DOMContentLoaded', () => {
         stopAutoDraw(); 
         if (drawHistory.length === 0) return; 
         const lastNumber = drawHistory.pop(); 
-        calledNumbers.pop();
+        const index = calledNumbers.indexOf(lastNumber);
+        if (index > -1) calledNumbers.splice(index, 1);
         availableNumbers.push(lastNumber); 
         availableNumbers.sort((a,b) => a-b);
         
         const cell = document.getElementById(`cell-${lastNumber}`);
         if(cell) {
             cell.classList.remove('called');
-            cell.style.opacity = '';
         }
 
         const newLast = drawHistory.length > 0 ? drawHistory[drawHistory.length - 1] : '--'; 
         currentNumberDisplay.textContent = newLast; 
-        
-        if(newLast !== '--') {
-            const newLastCell = document.getElementById(`cell-${newLast}`);
-            if(newLastCell) newLastCell.style.opacity = '1.0';
-        }
 
-        if (drawHistory.length === 0) undoButton.disabled = true; 
+        if (drawHistory.length === 0) {
+            undoButton.disabled = true; 
+            repeatButton.disabled = true;
+        }
         drawButton.disabled = false; 
         updateCalledNumbersList();
         saveGameState(); 
@@ -390,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updateCalledNumbersList() {
         calledNumbersList.innerHTML = '';
-        const lastFive = calledNumbers.slice(-5);
+        const lastFive = drawHistory.slice(-5);
         lastFive.forEach(num => {
             const s = document.createElement('span');
             s.textContent = num;
@@ -404,16 +379,12 @@ document.addEventListener('DOMContentLoaded', () => {
             verifyResultDiv.innerHTML = '<p style="color: red;">Please enter numbers to verify.</p>';
             return;
         }
-
         const numbersToVerify = [...new Set(numbersString.split(/\s+/).map(Number))].filter(n => !isNaN(n) && n > 0 && n <= 90);
-        
         if (numbersToVerify.length === 0) {
-             verifyResultDiv.innerHTML = '<p style="color: red;">No valid numbers entered for verification (only numbers 1-90 are allowed).</p>';
+             verifyResultDiv.innerHTML = '<p style="color: red;">No valid numbers entered (1-90 only).</p>';
              return;
         }
-        
         const missingNumbers = numbersToVerify.filter(num => !calledNumbers.includes(num));
-
         verifyResultDiv.innerHTML = '<h4>Verification Result:</h4>';
         numbersToVerify.forEach(num => {
             const span = document.createElement('span');
@@ -426,17 +397,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             verifyResultDiv.appendChild(span);
         });
-
         if (missingNumbers.length === 0) {
-            verifyResultDiv.innerHTML += '<p style="color: var(--success-color); font-weight: bold; margin-top: 10px;">✅ All numbers have been called! Valid claim!</p>';
+            verifyResultDiv.innerHTML += '<p style="color: var(--success-color); font-weight: bold; margin-top: 10px;">✅ Valid claim! All numbers have been called.</p>';
         } else {
-            verifyResultDiv.innerHTML += `<p style="color: var(--error-color); font-weight: bold; margin-top: 10px;">❌ Not all numbers have been called. ${missingNumbers.length} missing.</p>`;
+            verifyResultDiv.innerHTML += `<p style="color: var(--error-color); font-weight: bold; margin-top: 10px;">❌ Not all numbers have been called. Missing: ${missingNumbers.join(', ')}</p>`;
         }
     }
+
     function resetVerification() { 
         verifyNumbersInput.value = ''; 
         verifyResultDiv.innerHTML = '';
     }
+
     function saveGameState() { 
         localStorage.setItem('calledNumbers', JSON.stringify(calledNumbers));
         localStorage.setItem('availableNumbers', JSON.stringify(availableNumbers));
@@ -448,12 +420,10 @@ document.addEventListener('DOMContentLoaded', () => {
         } else {
             const time = parseInt(autoDrawTimeInput.value) || 5;
             if (time <= 0) {
-                alert("Please enter a valid time (in seconds) for auto-draw.");
-                return;
+                alert("Please enter a valid time (in seconds)."); return;
             }
             if (availableNumbers.length === 0) {
-                alert("Cannot start auto-draw, all numbers have been called!");
-                return;
+                alert("Cannot start, all numbers have been called!"); return;
             }
             autoDrawIntervalId = setInterval(drawNumber, time * 1000);
             autoDrawBtn.textContent = 'Stop Auto-Draw';
@@ -467,18 +437,43 @@ document.addEventListener('DOMContentLoaded', () => {
             autoDrawIntervalId = null;
             autoDrawBtn.textContent = 'Start Auto-Draw';
             autoDrawBtn.classList.remove('danger-btn');
-            if (availableNumbers.length > 0) {
-                drawButton.disabled = false;
-            }
+            if (availableNumbers.length > 0) drawButton.disabled = false;
         }
     }
+
     function enforceNumericInput(event) {
         const input = event.target;
         const regex = (input.id === 'verify-numbers') ? /[^0-9\s]/g : /[^0-9]/g;
-        if (regex.test(input.value)) {
-            input.value = input.value.replace(regex, '');
+        input.value = input.value.replace(regex, '');
+    }
+
+    // --- NEW & UPDATED FUNCTIONS ---
+    function repeatLastNumber() {
+        if (drawHistory.length > 0) {
+            const lastNumber = drawHistory[drawHistory.length - 1];
+            speakNumber(lastNumber);
         }
     }
+
+    function openHistoryModal() {
+        historyListContainer.innerHTML = '';
+        if (drawHistory.length === 0) {
+            historyListContainer.innerHTML = '<p>No numbers have been called yet.</p>';
+        } else {
+            // --- FIX 2: Removed .reverse() to show numbers in chronological order ---
+            drawHistory.forEach(num => {
+                const s = document.createElement('span');
+                s.textContent = num;
+                historyListContainer.appendChild(s);
+            });
+        }
+        historyModal.style.display = 'flex';
+    }
+
+    function closeHistoryModal() {
+        historyModal.style.display = 'none';
+    }
+
 
     // --- EVENT LISTENERS ---
     fontSelector.addEventListener('change', handleFontChange);
@@ -494,6 +489,21 @@ document.addEventListener('DOMContentLoaded', () => {
     verifyResetBtn.addEventListener('click', resetVerification);
     tabBar.addEventListener('click', handleTabClick);
     autoDrawBtn.addEventListener('click', handleAutoDraw);
+    
+    repeatButton.addEventListener('click', repeatLastNumber);
+    historyButton.addEventListener('click', openHistoryModal);
+    modalCloseBtn.addEventListener('click', closeHistoryModal);
+    historyModal.addEventListener('click', (e) => { 
+        if (e.target === historyModal) closeHistoryModal();
+    });
+    voiceSpeedSlider.addEventListener('input', (e) => {
+        voiceSpeedValue.textContent = e.target.value;
+        localStorage.setItem('tambolaVoiceSpeed', e.target.value);
+    });
+    voicePitchSlider.addEventListener('input', (e) => {
+        voicePitchValue.textContent = e.target.value;
+        localStorage.setItem('tambolaVoicePitch', e.target.value);
+    });
 
     prizeListContainer.addEventListener('click', handlePrizeListEvents);
     prizeListContainer.addEventListener('change', handlePrizeListEvents);
