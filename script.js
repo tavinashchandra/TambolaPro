@@ -75,9 +75,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const option = document.createElement('option');
             option.value = voice.voiceURI;
             option.textContent = `${voice.name} (${voice.lang})`;
-            if (voice.voiceURI === selectedVoiceURI) {
-                option.selected = true;
-            }
+            if (voice.voiceURI === selectedVoiceURI) option.selected = true;
             voiceSelector.appendChild(option);
         });
     }
@@ -169,7 +167,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-
+    
     function drawNumber() {
         if (availableNumbers.length === 0) {
             stopAutoDraw();
@@ -334,7 +332,9 @@ document.addEventListener('DOMContentLoaded', () => {
     verifyBtn.addEventListener('click', () => { /* verify logic */ });
     verifyResetBtn.addEventListener('click', resetVerification);
     autoDrawTimeInput.addEventListener('input', e => { autoDrawTimeValue.textContent = e.target.value; localStorage.setItem('tambolaAutoDrawTime', e.target.value); });
-    voiceToggle.addEventListener('change', e => { voiceEnabled = e.target.checked; localStorage.setItem('tambolaVoiceEnabled', voiceEnabled); });
+    voiceToggle.addEventListener('change', e => { voiceEnabled = e.target.checked; localStorage.setItem('tambolaVoiceEnabled', voiceEnabled.toString()); });
+    themeSelector.addEventListener('change', e => { document.body.className = e.target.value; localStorage.setItem('tambolaTheme', e.target.value); });
+    fontSelector.addEventListener('change', e => { document.documentElement.style.setProperty('--main-font', e.target.value); localStorage.setItem('tambolaFont', e.target.value); });
     
     // --- INITIAL LOAD ---
     populateVoiceList();
