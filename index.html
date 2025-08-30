@@ -40,8 +40,9 @@
             <div id="game-pane" class="tab-pane">
                 <section class="card game-card">
                     <div id="current-number">--</div>
-                    <div id="called-numbers-container">
-                        <div id="called-numbers-list"></div>
+                    <div class="progress-tracker">
+                        <span id="progress-text">0 / 90 Numbers Called</span>
+                        <progress id="progress-bar" value="0" max="90"></progress>
                     </div>
                     <div class="game-controls">
                         <button id="draw-button" class="action-btn big-draw-button">Draw Number</button>
