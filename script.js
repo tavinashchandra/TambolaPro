@@ -35,8 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const historyModalBackdrop = document.getElementById('history-modal-backdrop');
     const modalCloseBtn = document.getElementById('modal-close-btn');
     const historyListContainer = document.getElementById('history-list-container');
-    const desktopCalledNumbersList = document.getElementById('called-numbers-list');
     const autoDrawToggle = document.getElementById('auto-draw-toggle');
+    const progressText = document.getElementById('progress-text');
+    const progressBar = document.getElementById('progress-bar');
 
     // --- GAME STATE ---
     let voices = [];
@@ -51,7 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'fh1', name: 'Full Housie (1)', claimed: false, amount: 0 }
     ];
 
-    // --- CORE LOGIC ---
+    function applyFont(font) { document.documentElement.style.setProperty('--main-font', font); }
+    function applyTheme(theme) { document.body.className = theme; }
+
     function handleTabClick(event) {
         const clickedTab = event.target.closest('.tab-btn');
         if (!clickedTab) return;
@@ -160,8 +163,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const cell = board.querySelector(`[data-number="${number}"]`);
         if (cell) {
             if (action === 'add') {
-                cell.classList.add('called', 'just-called');
-                setTimeout(() => cell.classList.remove('just-called'), 600);
+                cell.classList.add('called');
             } else {
                 cell.classList.remove('called');
             }
@@ -179,7 +181,7 @@ document.addEventListener('DOMContentLoaded', () => {
         drawHistory.push(num);
         currentNumberDisplay.textContent = num;
         updateBoard(num, 'add');
-        updateCalledNumbersList();
+        updateProgressTracker();
         undoButton.disabled = false;
         repeatButton.disabled = false;
         speakNumber(num);
@@ -198,17 +200,14 @@ document.addEventListener('DOMContentLoaded', () => {
             undoButton.disabled = true;
             repeatButton.disabled = true;
         }
-        updateCalledNumbersList();
+        updateProgressTracker();
         saveGameState();
     }
-
-    function updateCalledNumbersList() {
-        desktopCalledNumbersList.innerHTML = '';
-        drawHistory.slice(-5).reverse().forEach(num => {
-            const s = document.createElement('span');
-            s.textContent = num;
-            desktopCalledNumbersList.appendChild(s);
-        });
+    
+    function updateProgressTracker() {
+        const calledCount = calledNumbers.length;
+        progressText.textContent = `${calledCount} / 90 Numbers Called`;
+        progressBar.value = calledCount;
     }
 
     function openHistoryModal() {
@@ -279,7 +278,6 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.clear();
         
         currentNumberDisplay.textContent = '--';
-        updateCalledNumbersList();
         drawButton.disabled = false;
         undoButton.disabled = true;
         repeatButton.disabled = true;
@@ -290,6 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
         initializeBoard();
         renderPrizes();
         resetVerification();
+        updateProgressTracker();
     }
 
     function loadSavedState() {
@@ -305,13 +304,25 @@ document.addEventListener('DOMContentLoaded', () => {
         undoButton.disabled = drawHistory.length === 0;
         repeatButton.disabled = drawHistory.length === 0;
         
+        const savedFont = localStorage.getItem('tambolaFont') || '"Poppins", sans-serif';
+        applyFont(savedFont);
+        fontSelector.value = savedFont;
+        
+        const savedTheme = localStorage.getItem('tambolaTheme') || 'theme-light';
+        applyTheme(savedTheme);
+        themeSelector.value = savedTheme;
+        
         const savedVoiceEnabled = localStorage.getItem('tambolaVoiceEnabled');
         voiceEnabled = savedVoiceEnabled !== null ? savedVoiceEnabled === 'true' : true;
         voiceToggle.checked = voiceEnabled;
         
+        const savedAutoDrawTime = localStorage.getItem('tambolaAutoDrawTime') || '5';
+        autoDrawTimeInput.value = savedAutoDrawTime;
+        autoDrawTimeValue.textContent = savedAutoDrawTime;
+        
         initializeBoard();
-        updateCalledNumbersList();
         renderPrizes();
+        updateProgressTracker();
     }
     function resetVerification() { verifyNumbersInput.value = ''; verifyResultDiv.innerHTML = '';}
 
@@ -333,8 +344,11 @@ document.addEventListener('DOMContentLoaded', () => {
     verifyResetBtn.addEventListener('click', resetVerification);
     autoDrawTimeInput.addEventListener('input', e => { autoDrawTimeValue.textContent = e.target.value; localStorage.setItem('tambolaAutoDrawTime', e.target.value); });
     voiceToggle.addEventListener('change', e => { voiceEnabled = e.target.checked; localStorage.setItem('tambolaVoiceEnabled', voiceEnabled.toString()); });
-    themeSelector.addEventListener('change', e => { document.body.className = e.target.value; localStorage.setItem('tambolaTheme', e.target.value); });
-    fontSelector.addEventListener('change', e => { document.documentElement.style.setProperty('--main-font', e.target.value); localStorage.setItem('tambolaFont', e.target.value); });
+    themeSelector.addEventListener('change', e => { applyTheme(e.target.value); localStorage.setItem('tambolaTheme', e.target.value); });
+    fontSelector.addEventListener('change', e => { applyFont(e.target.value); localStorage.setItem('tambolaFont', e.target.value); });
+    voiceSelector.addEventListener('change', e => localStorage.setItem('tambolaVoiceURI', e.target.value));
+    voiceSpeedSlider.addEventListener('input', e => { voiceSpeedValue.textContent = e.target.value; localStorage.setItem('tambolaVoiceSpeed', e.target.value); });
+    voicePitchSlider.addEventListener('input', e => { voicePitchValue.textContent = e.target.value; localStorage.setItem('tambolaVoicePitch', e.target.value); });
     
     // --- INITIAL LOAD ---
     populateVoiceList();
