@@ -4,41 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tambola App - By Avinash</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Merriweather:wght@400;700&family=Montserrat:wght@400;700&family=Nunito:wght@400;700&family=Open+Sans:wght@400;700&family=Playfair+Display:wght@400;700&family=Poppins:wght@400;500;700&family=Roboto+Slab:wght@400;700&family=Raleway:wght@400;700&family=Inter:wght@400;700&family=Lora:wght@400;700&family=Noto+Sans:wght@400;700&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&family=Roboto+Slab:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div class="app-container">
         <header class="app-header">
-            <h1 id="header-title">Tambola</h1>
+            <h1>Tambola</h1>
         </header>
 
         <main class="main-content">
             <div id="setup-pane" class="tab-pane active">
                 <section class="card">
-                    <h2>Prize Money💰</h2>
-                    <p class="subtle-text">Calculate your total prize pool based on ticket sales.</p>
+                    <h2>Prize Money 💰</h2>
                     <div class="calc-inputs">
-                        <div>
-                            <label for="entry-fee">Entry Fee per Ticket (₹)</label>
-                            <input type="text" inputmode="numeric" pattern="[0-9]*" id="entry-fee" placeholder="e.g., 100">
-                        </div>
-                        <div>
-                            <label for="tickets-sold">Number of Tickets Sold</label>
-                            <input type="text" inputmode="numeric" pattern="[0-9]*" id="tickets-sold" placeholder="e.g., 50">
-                        </div>
+                        <input type="text" inputmode="numeric" id="entry-fee" placeholder="Entry Fee per Ticket (₹)">
+                        <input type="text" inputmode="numeric" id="tickets-sold" placeholder="Number of Tickets Sold">
                     </div>
                     <button id="calculate-btn" class="primary-btn">CALCULATE</button>
-                    <div id="total-collection"></div>
+                    <div id="total-collection" class="info-banner">Total Prize Pool: ₹0</div>
                 </section>
                 <section class="card prizes-card">
                     <h2>Prizes 🏆</h2>
-                    <div id="prizes-total-banner">Total Prize Money: ₹0</div>
+                    <div id="prizes-total-banner" class="info-banner">Total Prize Money: ₹0</div>
                     <div id="prize-list"></div>
                     <div id="add-prize-form">
                         <input type="text" id="new-prize-name" placeholder="Add new prize...">
@@ -56,28 +46,28 @@
                     <div class="game-controls">
                         <button id="draw-button" class="action-btn big-draw-button">Draw Number</button>
                         <div class="secondary-controls">
-                             <button id="undo-button" class="secondary-action-btn" disabled>↩️ Undo</button>
-                             <button id="repeat-button" class="secondary-action-btn" disabled>🗣️ Repeat</button>
-                             <button id="show-board-btn" class="secondary-action-btn">🔢 Show Board</button>
+                             <button id="undo-button" class="icon-btn" disabled title="Undo Last">↩️</button>
+                             <button id="repeat-button" class="icon-btn" disabled title="Repeat Last Number">🗣️</button>
+                             <button id="history-btn" class="icon-btn" title="Show History">📖</button>
                         </div>
                     </div>
-                    <div class="tambola-board-container desktop-board">
-                        <table id="tambola-board"></table>
+                    <div class="compact-auto-draw">
+                        <label for="auto-draw-toggle" class="switch">
+                            <input type="checkbox" id="auto-draw-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span>Auto-Draw</span>
                     </div>
-                    <div class="auto-draw-controls">
-                        <label for="auto-draw-time">Draw every</label>
-                        <input type="text" inputmode="numeric" pattern="[0-9]*" id="auto-draw-time" value="5">
-                        <span>sec</span>
-                        <button id="auto-draw-btn" class="primary-btn">Start Auto-Draw</button>
+                    <div class="tambola-board-container">
+                        <table id="tambola-board"></table>
                     </div>
                 </section>
             </div>
             
             <div id="verify-pane" class="tab-pane">
-                 <section class="card verification-card">
+                 <section class="card">
                     <h3>✔️ Winner Verification</h3>
-                    <p class="subtle-text">Enter numbers from a player's ticket to check if they are all called.</p>
-                    <textarea id="verify-numbers" placeholder="e.g., 8 25 47 66 89" inputmode="numeric"></textarea>
+                    <textarea id="verify-numbers" placeholder="e.g., 8 25 47 66 89" rows="3"></textarea>
                     <div class="verification-controls">
                         <button id="verify-btn" class="primary-btn">Verify Claim</button>
                         <button id="verify-reset-btn" class="secondary-btn">Clear</button>
@@ -92,10 +82,8 @@
                         <div>
                             <label for="font-selector">Font Style</label>
                             <select id="font-selector">
-                                <option value='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'>System Default</option>
                                 <option value='"Poppins", sans-serif'>Poppins</option>
                                 <option value='"Roboto Slab", serif'>Roboto Slab</option>
-                                <option value='"Nunito", sans-serif'>Nunito</option>
                             </select>
                         </div>
                         <div>
@@ -103,8 +91,6 @@
                             <select id="theme-selector">
                                 <option value="theme-light">Default Light</option>
                                 <option value="theme-dark">Dark Mode</option>
-                                <option value="theme-ocean">Ocean Breeze</option>
-                                <option value="theme-royal">Royal Purple</option>
                             </select>
                         </div>
                         <div>
@@ -126,6 +112,10 @@
                                 <span class="slider round"></span>
                             </label>
                         </div>
+                        <div class="slider-control">
+                            <label for="auto-draw-time">Auto-Draw Interval: <span id="auto-draw-time-value">5</span>s</label>
+                            <input type="range" id="auto-draw-time" min="1" max="10" step="1" value="5">
+                        </div>
                     </div>
                     <button id="reset-game-btn" class="danger-btn full-width-btn">Reset Entire Game</button>
                     <div class="footer-credit">
@@ -144,20 +134,14 @@
         </nav>
     </div>
     
-    <div id="board-modal-backdrop" class="modal-backdrop"></div>
-    <div id="board-modal" class="board-modal">
+    <div id="history-modal-backdrop" class="modal-backdrop"></div>
+    <div id="history-modal" class="history-modal">
         <div class="modal-header">
-            <h3>Tambola Board</h3>
+            <h3>Called Numbers History</h3>
             <button id="modal-close-btn" class="modal-close">&times;</button>
         </div>
-        <div id="modal-called-numbers-container">
-            <p>Recently Called:</p>
-            <div id="modal-called-numbers-list"></div>
-        </div>
-        <div class="tambola-board-container" id="modal-board-container">
-            </div>
+        <div id="history-list-container"></div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
