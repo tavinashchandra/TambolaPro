@@ -39,12 +39,7 @@
                 <section class="card prizes-card">
                     <h2>Prizes 🏆</h2>
                     <div id="prizes-total-banner">Total Prize Money: ₹0</div>
-                    <div id="prize-mode-selector" class="mode-selector">
-                        <label>
-                            <input type="radio" id="manual-mode" name="prize-mode" value="manual" checked>
-                            Manual Amounts
-                        </label>
-                    </div>
+                    
                     <div id="prize-list"></div>
                     <div id="add-prize-form">
                         <input type="text" id="new-prize-name" placeholder="Add new prize...">
@@ -62,7 +57,11 @@
                     </div>
                     <div class="game-controls">
                         <button id="draw-button" class="action-btn big-draw-button">Draw Number</button>
-                        <button id="undo-button" class="secondary-action-btn" disabled>↩️ Undo Last</button>
+                        <div class="secondary-controls">
+                            <button id="undo-button" class="secondary-action-btn" disabled>↩️ Undo Last</button>
+                            <button id="repeat-button" class="secondary-action-btn" disabled>🗣️ Repeat</button>
+                            <button id="history-button" class="secondary-action-btn">📖 History</button>
+                        </div>
                     </div>
                     <div class="tambola-board-container">
                         <table id="tambola-board"></table>
@@ -129,6 +128,14 @@
                             <label for="voice-selector">Voice Accent</label>
                             <select id="voice-selector"></select>
                         </div>
+                        <div class="slider-control">
+                            <label for="voice-speed">Voice Speed: <span id="voice-speed-value">1.0</span></label>
+                            <input type="range" id="voice-speed" min="0.5" max="1.5" step="0.1" value="0.9">
+                        </div>
+                        <div class="slider-control">
+                            <label for="voice-pitch">Voice Pitch: <span id="voice-pitch-value">1.0</span></label>
+                            <input type="range" id="voice-pitch" min="0" max="2" step="0.1" value="1.0">
+                        </div>
                         <div class="toggle-control">
                             <label for="voice-toggle">Voice Announcements</label>
                             <label class="switch">
@@ -155,6 +162,14 @@
         </nav>
     </div>
     
+    <div id="history-modal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <button id="modal-close-btn" class="modal-close">&times;</button>
+            <h2>Called Numbers History</h2>
+            <div id="history-list"></div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
