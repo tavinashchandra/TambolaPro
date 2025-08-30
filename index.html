@@ -39,13 +39,11 @@
                 <section class="card prizes-card">
                     <h2>Prizes 🏆</h2>
                     <div id="prizes-total-banner">Total Prize Money: ₹0</div>
-                    
                     <div id="prize-list"></div>
                     <div id="add-prize-form">
                         <input type="text" id="new-prize-name" placeholder="Add new prize...">
                         <button id="add-prize-btn" class="primary-btn">Add Prize</button>
                     </div>
-                    <div id="manual-total-display"></div>
                 </section>
             </div>
 
@@ -58,15 +56,15 @@
                     <div class="game-controls">
                         <button id="draw-button" class="action-btn big-draw-button">Draw Number</button>
                         <div class="secondary-controls">
-                            <button id="undo-button" class="secondary-action-btn" disabled>↩️ Undo Last</button>
-                            <button id="repeat-button" class="secondary-action-btn" disabled>🗣️ Repeat</button>
-                            <button id="history-button" class="secondary-action-btn">📖 History</button>
+                             <button id="undo-button" class="secondary-action-btn" disabled>↩️ Undo</button>
+                             <button id="repeat-button" class="secondary-action-btn" disabled>🗣️ Repeat</button>
+                             <button id="show-board-btn" class="secondary-action-btn">🔢 Show Board</button>
                         </div>
                     </div>
-                    <div class="tambola-board-container">
+                    <div class="tambola-board-container desktop-board">
                         <table id="tambola-board"></table>
                     </div>
-                    <div class="auto-draw-controls bottom-controls">
+                    <div class="auto-draw-controls">
                         <label for="auto-draw-time">Draw every</label>
                         <input type="text" inputmode="numeric" pattern="[0-9]*" id="auto-draw-time" value="5">
                         <span>sec</span>
@@ -98,15 +96,6 @@
                                 <option value='"Poppins", sans-serif'>Poppins</option>
                                 <option value='"Roboto Slab", serif'>Roboto Slab</option>
                                 <option value='"Nunito", sans-serif'>Nunito</option>
-                                <option value='"Montserrat", sans-serif'>Montserrat</option>
-                                <option value='"Playfair Display", serif'>Playfair Display</option>
-                                <option value='"Open Sans", sans-serif'>Open Sans</option>
-                                <option value='"Lato", sans-serif'>Lato</option>
-                                <option value='"Merriweather", serif'>Merriweather</option>
-                                <option value='"Raleway", sans-serif'>Raleway</option>
-                                <option value='"Inter", sans-serif'>Inter</option>
-                                <option value='"Lora", serif'>Lora</option>
-                                <option value='"Noto Sans", sans-serif'>Noto Sans</option>
                             </select>
                         </div>
                         <div>
@@ -114,14 +103,8 @@
                             <select id="theme-selector">
                                 <option value="theme-light">Default Light</option>
                                 <option value="theme-dark">Dark Mode</option>
-                                <option value="theme-sunset">Sunset</option>
-                                <option value="theme-contrast">High Contrast</option>
                                 <option value="theme-ocean">Ocean Breeze</option>
                                 <option value="theme-royal">Royal Purple</option>
-                                <option value="theme-forest">Forest Green</option>
-                                <option value="theme-grayscale">Grayscale</option>
-                                <option value="theme-warm">Warm Tones</option>
-                                <option value="theme-cool">Cool Tones</option>
                             </select>
                         </div>
                         <div>
@@ -129,7 +112,7 @@
                             <select id="voice-selector"></select>
                         </div>
                         <div class="slider-control">
-                            <label for="voice-speed">Voice Speed: <span id="voice-speed-value">1.0</span></label>
+                            <label for="voice-speed">Voice Speed: <span id="voice-speed-value">0.9</span></label>
                             <input type="range" id="voice-speed" min="0.5" max="1.5" step="0.1" value="0.9">
                         </div>
                         <div class="slider-control">
@@ -145,7 +128,6 @@
                         </div>
                     </div>
                     <button id="reset-game-btn" class="danger-btn full-width-btn">Reset Entire Game</button>
-                    
                     <div class="footer-credit">
                         <img src="https://avatars.githubusercontent.com/u/119234711?v=4" alt="Avinash Chandra" class="avatar-photo">
                         <p>Coded with ❤️ By Avinash Chandra</p>
@@ -155,19 +137,25 @@
         </main>
 
         <nav class="tab-bar">
-            <button class="tab-btn active" data-target="setup-pane">📝 Setup & Prizes</button>
+            <button class="tab-btn active" data-target="setup-pane">📝 Prizes</button>
             <button class="tab-btn" data-target="game-pane">🎲 Game</button>
             <button class="tab-btn" data-target="verify-pane">✔️ Verify</button>
             <button class="tab-btn" data-target="settings-pane">⚙️ Settings</button>
         </nav>
     </div>
     
-    <div id="history-modal" class="modal-overlay" style="display: none;">
-        <div class="modal-content">
+    <div id="board-modal-backdrop" class="modal-backdrop"></div>
+    <div id="board-modal" class="board-modal">
+        <div class="modal-header">
+            <h3>Tambola Board</h3>
             <button id="modal-close-btn" class="modal-close">&times;</button>
-            <h2>Called Numbers History</h2>
-            <div id="history-list"></div>
         </div>
+        <div id="modal-called-numbers-container">
+            <p>Recently Called:</p>
+            <div id="modal-called-numbers-list"></div>
+        </div>
+        <div class="tambola-board-container" id="modal-board-container">
+            </div>
     </div>
 
     <script src="script.js"></script>
