@@ -76,43 +76,30 @@ input, select, textarea { font-family: var(--main-font); color: var(--text-color
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 2px var(--subtle-bg-color); }
 input[readonly] { background-color: var(--input-readonly-bg); }
 
-/* SPECIFIC CHANGES: Center the CALCULATE button */
 .calc-inputs + #calculate-btn {
     display: block;
     width: auto;
     max-width: 250px;
-    margin: 0 auto;
+    margin: 1.5rem auto 0;
 }
 
 /* --- SPECIFIC COMPONENTS --- */
 .calc-inputs { display: flex; flex-direction: column; gap: 1rem; margin: 1.5rem 0; }
 .calc-inputs label { font-weight: 500; }
 #total-collection { font-size: 1.25rem; font-weight: bold; margin-top: 1.5rem; text-align: center; color: var(--primary-color); background-color: var(--subtle-bg-color); padding: 0.75rem; border-radius: 8px; }
-.mode-selector { 
-    display: flex;
-    justify-content: center; 
-    gap: 1rem; 
-    margin-top: 1rem; 
-    background: var(--subtle-bg-color); 
-    padding: 0.5rem; 
-    border-radius: 25px; 
-    display: none; 
-}
-.mode-selector label { padding: 0.5rem 1rem; border-radius: 20px; cursor: pointer; transition: all 0.2s; }
-.mode-selector input { display: none; }
-.mode-selector label.selected { background-color: var(--primary-color); color: white; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+
+/* Prizes Section */
 #add-prize-form { display: flex; gap: 10px; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
 .prize-item { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "name actions" "details actions"; align-items: center; gap: 10px; padding: 1rem 0; border-bottom: 1px solid var(--border-color); }
 .prize-item:last-of-type { border-bottom: none; }
 .prize-name { grid-area: name; font-weight: 600; font-size: 1.1rem; text-align: left; }
 .prize-details { grid-area: details; display: flex; align-items: center; gap: 10px; }
 .prize-actions { grid-area: actions; display: flex; gap: 8px; }
-.weight-container { display: none; }
 .amount-input { width: 90px; text-align: center; padding: 8px; margin: 0; }
 .icon-btn-small { background: var(--subtle-bg-color); color: var(--text-color); font-size: 1.1rem; padding: 8px; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; }
 .prize-item.claimed { background-color: var(--claimed-bg-color); color: var(--claimed-text-color); opacity: 0.8; border-radius: 8px; padding: 1rem; margin: 0.5rem 0; }
 .prize-item.claimed .prize-name { text-decoration: line-through; }
-.prize-item.claimed .claim-btn { background-color: var(--accent-color); color: #000; }
+.claim-btn.is-claimed { background-color: var(--accent-color); color: #000; }
 #manual-total-display { 
     font-weight: bold; 
     text-align: right; 
@@ -121,7 +108,6 @@ input[readonly] { background-color: var(--input-readonly-bg); }
     color: var(--header-color); 
     display: none;
 }
-/* New Banner Styling */
 #prizes-total-banner {
     text-align: center;
     font-size: 1.25rem;
@@ -133,34 +119,19 @@ input[readonly] { background-color: var(--input-readonly-bg); }
     margin-bottom: 1.5rem;
 }
 
-/* New Footer Styling */
+/* Footer Styling */
 .footer-credit {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    margin-top: 2rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border-color);
-    font-size: 0.85rem;
-    color: var(--subtle-text-color);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); font-size: 0.85rem; color: var(--subtle-text-color);
 }
 .avatar-photo {
-    width: 80px; /* Increased size slightly for better visibility */
-    height: 80px; /* Increased size slightly for better visibility */
-    border-radius: 50%;
-    border: 3px solid var(--primary-color); /* Slightly thicker border */
-    margin-bottom: 15px; /* Increased margin for more separation */
-    object-fit: cover; /* Ensures the image covers the area without distortion */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Added a subtle shadow */
+    width: 80px; height: 80px; border-radius: 50%; border: 3px solid var(--primary-color); margin-bottom: 15px; object-fit: cover; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 /* Game Pane & Board */
 #current-number { font-family: var(--board-font); font-size: clamp(5rem, 20vw, 8rem); font-weight: 700; color: var(--danger-color); background-color: var(--card-bg-color); border: 4px solid var(--subtle-bg-color); border-radius: 50%; aspect-ratio: 1 / 1; width: 45%; max-width: 180px; display: flex; justify-content: center; align-items: center; margin: 0 auto; box-shadow: var(--shadow); flex-shrink: 0; }
 .game-controls { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 1rem; }
 .big-draw-button { padding: 1rem 2rem; font-size: 1.5rem; border-radius: 12px; width: 90%; max-width: 320px; }
-#undo-button { padding: 8px 16px; font-size: 0.9rem; }
+.secondary-controls { display: flex; gap: 1rem; margin-top: 0.5rem; justify-content: center; flex-wrap: wrap; }
 #called-numbers-list { display: flex; justify-content: center; align-items: center; gap: 10px; min-height: 40px; flex-wrap: wrap; }
 #called-numbers-list span { display: inline-flex; justify-content: center; align-items: center; width: 38px; height: 38px; background-color: var(--subtle-bg-color); color: var(--subtle-text-color); border-radius: 50%; font-size: 1rem; font-weight: 700; font-family: var(--board-font); transition: all 0.3s ease; }
 #called-numbers-list span:last-child { background-color: var(--primary-color); color: white; transform: scale(1.15); }
@@ -168,8 +139,18 @@ input[readonly] { background-color: var(--input-readonly-bg); }
 #tambola-board { border-collapse: separate; border-spacing: 4px; margin: 1rem auto 0; width: 100%; }
 #tambola-board td { border: 1px solid var(--border-color); aspect-ratio: 1 / 1; text-align: center; font-size: clamp(0.8rem, 2.5vw, 1rem); font-weight: 500; font-family: var(--board-font); border-radius: 8px; transition: all 0.3s ease; }
 #tambola-board td.called { background-color: var(--primary-color); color: var(--called-number-text); transform: scale(0.9); border-radius: 50%; opacity: 0.8; }
+@keyframes pop { 0% { transform: scale(0.9); } 50% { transform: scale(1.2); background-color: var(--accent-color); color: #000; border-radius: 50%; } 100% { transform: scale(0.9); } }
+#tambola-board td.just-called { animation: pop 0.6s ease-in-out; }
+
 .auto-draw-controls { display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
 #auto-draw-time { width: 60px; text-align: center; margin: 0; }
+
+@media (max-height: 700px) {
+    #current-number { font-size: clamp(4rem, 18vw, 6rem); width: 40%; max-width: 150px; }
+    .big-draw-button { padding: 0.8rem 1.5rem; font-size: 1.2rem; }
+    .game-controls { margin-top: 0.5rem; }
+    #tambola-board { margin-top: 0.5rem; }
+}
 
 /* Verification & Settings */
 .verification-card textarea { min-height: 100px; resize: vertical; }
@@ -178,69 +159,36 @@ input[readonly] { background-color: var(--input-readonly-bg); }
 #verify-result .num.called { background-color: var(--success-color); color: white; }
 #verify-result .num.not-called { background-color: var(--error-color); color: white; }
 .settings-grid { display: flex; flex-direction: column; gap: 1.5rem; text-align: left; }
-.toggle-control { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    width: 100%; /* Ensure it takes full width of its grid cell */
-}
+.toggle-control { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+.slider-control { display: flex; flex-direction: column; }
+.slider-control label { margin-bottom: 0.5rem; }
+.slider-control input[type="range"] { margin: 0; padding: 0; width: 100%; -webkit-appearance: none; appearance: none; background: transparent; cursor: pointer; }
+.slider-control input[type="range"]::-webkit-slider-runnable-track { background: var(--subtle-bg-color); height: 0.5rem; border-radius: 0.5rem; }
+.slider-control input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; margin-top: -4px; background-color: var(--primary-color); height: 20px; width: 20px; border-radius: 50%; }
 
-/* --- TOGGLE SWITCH STYLES --- */
-/* The switch - the box around the slider */
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 50px; /* Width of the entire switch */
-  height: 24px; /* Height of the entire switch */
-}
+/* Toggle Switch */
+.switch { position: relative; display: inline-block; width: 50px; height: 24px; }
+.switch input { opacity: 0; width: 0; height: 0; }
+.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 24px; }
+.slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 4px; bottom: 4px; background-color: white; transition: .4s; border-radius: 50%; }
+input:checked + .slider { background-color: var(--secondary-color); }
+input:checked + .slider:before { transform: translateX(26px); }
+.slider.round { border-radius: 24px; }
+.slider.round:before { border-radius: 50%; }
 
-/* Hide default HTML checkbox */
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+/* --- History Modal Styles --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.6); z-index: 2000; display: flex; justify-content: center; align-items: center;
 }
-
-/* The slider itself */
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: var(--border-color); /* Inactive color */
-  transition: .4s;
-  border-radius: 24px; /* Rounded corners for the track */
+.modal-content {
+    background: var(--card-bg-color); color: var(--text-color); padding: 2rem; border-radius: 16px; width: 90%; max-width: 450px; position: relative; box-shadow: 0 5px 20px rgba(0,0,0,0.2); animation: fadeIn 0.3s ease-out;
 }
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 16px; /* Height of the circle handle */
-  width: 16px; /* Width of the circle handle */
-  left: 4px; /* Initial position from the left */
-  bottom: 4px; /* Initial position from the bottom */
-  background-color: white; /* Color of the circle handle */
-  transition: .4s;
-  border-radius: 50%; /* Make the handle circular */
+.modal-close {
+    position: absolute; top: 10px; right: 15px; background: none; border: none; font-size: 2rem; font-weight: bold; cursor: pointer; color: var(--subtle-text-color);
 }
-
-/* When the checkbox is checked, change background color */
-input:checked + .slider {
-  background-color: var(--secondary-color); /* Active color (green) */
+#history-list {
+    display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; max-height: 60vh; overflow-y: auto; padding-top: 1rem;
 }
-
-/* Move the slider handle when checked */
-input:checked + .slider:before {
-  transform: translateX(26px); /* Move 26px to the right (50px - 16px - 4px - 4px) */
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 24px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
+#history-list span {
+    display: inline-flex; justify-content: center; align-items: center; width: 40px; height: 40px; background-color: var(--subtle-bg-color); color: var(--text-color); border-radius: 50%; font-weight: 700; font-family: var(--board-font);
 }
