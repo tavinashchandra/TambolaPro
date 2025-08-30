@@ -36,9 +36,8 @@
                     </div>
                 </section>
             </div>
-
             <div id="game-pane" class="tab-pane">
-                <section class="card game-card">
+                 <section class="card game-card">
                     <div id="current-number">--</div>
                     <div id="called-numbers-container">
                         <div id="called-numbers-list"></div>
@@ -63,9 +62,8 @@
                     </div>
                 </section>
             </div>
-            
             <div id="verify-pane" class="tab-pane">
-                 <section class="card">
+                  <section class="card">
                     <h3>✔️ Winner Verification</h3>
                     <textarea id="verify-numbers" placeholder="e.g., 8 25 47 66 89" rows="3"></textarea>
                     <div class="verification-controls">
@@ -79,40 +77,40 @@
             <div id="settings-pane" class="tab-pane">
                 <section class="card settings-card">
                     <div class="settings-grid">
-                        <div>
+                        <div class="setting-item">
                             <label for="font-selector">Font Style</label>
                             <select id="font-selector">
                                 <option value='"Poppins", sans-serif'>Poppins</option>
                                 <option value='"Roboto Slab", serif'>Roboto Slab</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="setting-item">
                             <label for="theme-selector">Color Theme</label>
                             <select id="theme-selector">
                                 <option value="theme-light">Default Light</option>
                                 <option value="theme-dark">Dark Mode</option>
                             </select>
                         </div>
-                        <div>
+                        <div class="setting-item">
                             <label for="voice-selector">Voice Accent</label>
                             <select id="voice-selector"></select>
                         </div>
-                        <div class="slider-control">
+                        <div class="setting-item slider-control">
                             <label for="voice-speed">Voice Speed: <span id="voice-speed-value">0.9</span></label>
                             <input type="range" id="voice-speed" min="0.5" max="1.5" step="0.1" value="0.9">
                         </div>
-                        <div class="slider-control">
+                        <div class="setting-item slider-control">
                             <label for="voice-pitch">Voice Pitch: <span id="voice-pitch-value">1.0</span></label>
                             <input type="range" id="voice-pitch" min="0" max="2" step="0.1" value="1.0">
                         </div>
-                        <div class="toggle-control">
+                        <div class="setting-item toggle-control">
                             <label for="voice-toggle">Voice Announcements</label>
                             <label class="switch">
                                 <input type="checkbox" id="voice-toggle" checked>
                                 <span class="slider round"></span>
                             </label>
                         </div>
-                        <div class="slider-control">
+                        <div class="setting-item slider-control">
                             <label for="auto-draw-time">Auto-Draw Interval: <span id="auto-draw-time-value">5</span>s</label>
                             <input type="range" id="auto-draw-time" min="1" max="10" step="1" value="5">
                         </div>
@@ -125,7 +123,7 @@
                 </section>
             </div>
         </main>
-
+        
         <nav class="tab-bar">
             <button class="tab-btn active" data-target="setup-pane">📝 Prizes</button>
             <button class="tab-btn" data-target="game-pane">🎲 Game</button>
@@ -133,7 +131,6 @@
             <button class="tab-btn" data-target="settings-pane">⚙️ Settings</button>
         </nav>
     </div>
-    
     <div id="history-modal-backdrop" class="modal-backdrop"></div>
     <div id="history-modal" class="history-modal">
         <div class="modal-header">
