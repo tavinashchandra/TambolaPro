@@ -43,28 +43,26 @@ input, select, textarea { font-family: var(--main-font); padding: 12px; border: 
 .prize-name { font-weight: 600; }
 .prize-actions { display: flex; gap: 0.5rem; align-items: center;}
 .amount-input { width: 70px; text-align: center; margin: 0; }
-.prize-item.claimed { background-color: var(--claimed-bg-color); opacity: 0.8; border-radius: 8px; padding: 1rem; margin: 0.5rem -1rem; }
-.prize-item.claimed .prize-name { text-decoration: line-through; }
-.claim-btn.is-claimed { background-color: var(--accent-color); color: #000; }
 #add-prize-form { display: flex; gap: 10px; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
 
 /* --- GAME PANE --- */
 .game-card { text-align: center; }
-#current-number { font-family: var(--board-font); font-size: clamp(5rem, 20vw, 8rem); font-weight: 700; color: var(--danger-color); border: 4px solid var(--subtle-bg-color); border-radius: 50%; aspect-ratio: 1 / 1; width: 45%; max-width: 180px; display: flex; justify-content: center; align-items: center; margin: 0 auto; box-shadow: var(--shadow); }
-.game-controls { display: flex; flex-direction: column; align-items: center; gap: 1rem; margin-top: 1.5rem; }
-.big-draw-button { padding: 1rem 2rem; font-size: 1.5rem; border-radius: 12px; width: 90%; max-width: 320px; background-color: var(--secondary-color); color: white; }
+#current-number { font-family: var(--board-font); font-size: clamp(4rem, 18vw, 6rem); font-weight: 700; color: var(--danger-color); border: 4px solid var(--subtle-bg-color); border-radius: 50%; aspect-ratio: 1 / 1; width: 40%; max-width: 160px; display: flex; justify-content: center; align-items: center; margin: 0 auto; box-shadow: var(--shadow); }
+.progress-tracker { margin: 1.5rem 0 1rem; }
+#progress-text { font-size: 0.9rem; font-weight: 500; color: var(--subtle-text-color); }
+#progress-bar { width: 100%; height: 8px; margin-top: 0.5rem; -webkit-appearance: none; appearance: none; }
+progress::-webkit-progress-bar { background-color: var(--subtle-bg-color); border-radius: 4px; }
+progress::-webkit-progress-value { background-color: var(--secondary-color); border-radius: 4px; transition: width 0.3s ease; }
+.game-controls { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+.big-draw-button { padding: 0.8rem 1.5rem; font-size: 1.2rem; border-radius: 12px; width: 100%; max-width: 280px; background-color: var(--secondary-color); color: white; }
 .secondary-controls { display: flex; gap: 1rem; justify-content: center; }
-.icon-btn { background-color: var(--accent-color); color: #000; width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem; padding: 0; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-#called-numbers-list { display: flex; justify-content: center; gap: 10px; min-height: 40px; flex-wrap: wrap; margin-top: 1.5rem; }
-#called-numbers-list span { display: inline-flex; justify-content: center; align-items: center; width: 38px; height: 38px; background-color: var(--subtle-bg-color); color: var(--subtle-text-color); border-radius: 50%; font-size: 1rem; font-weight: 700; font-family: var(--board-font); }
-#called-numbers-list span:last-child { background-color: var(--primary-color); color: white; transform: scale(1.15); }
-.tambola-board-container { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 10px; margin-top: 1.5rem; }
-#tambola-board { border-collapse: separate; border-spacing: 4px; width: 100%; }
-#tambola-board td { border: 1px solid var(--border-color); aspect-ratio: 1 / 1; text-align: center; font-size: 1rem; font-weight: 500; font-family: var(--board-font); border-radius: 8px; }
-#tambola-board td.called { background-color: var(--primary-color); color: var(--called-number-text); }
-@keyframes pop { 50% { transform: scale(1.2); background-color: var(--accent-color); color: #000; } }
-#tambola-board td.just-called { animation: pop 0.6s ease-in-out; }
-.compact-auto-draw { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--border-color); }
+.icon-btn { background-color: var(--accent-color); color: #000; width: 48px; height: 48px; border-radius: 50%; font-size: 1.2rem; padding: 0; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+#called-numbers-container { display: none; }
+.tambola-board-container { margin-top: 1.5rem; }
+#tambola-board { border-collapse: separate; border-spacing: 2px; width: 100%; }
+#tambola-board td { border: 1px solid var(--border-color); aspect-ratio: 1 / 1; text-align: center; font-size: 0.7rem; font-weight: 600; font-family: var(--board-font); border-radius: 4px; }
+#tambola-board td.called { background-color: var(--primary-color); color: var(--called-number-text); border-color: var(--primary-color); }
+.compact-auto-draw { display: flex; align-items: center; justify-content: center; gap: 1rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border-color); }
 
 /* --- VERIFY PAGE --- */
 .verification-controls { display: flex; gap: 1rem; margin-top: 1rem; }
@@ -82,7 +80,7 @@ input, select, textarea { font-family: var(--main-font); padding: 12px; border: 
 /* --- SETTINGS PANE --- */
 .settings-grid { display: flex; flex-direction: column; gap: 1.5rem; }
 .setting-item { display: flex; flex-direction: column; }
-.setting-item label { font-weight: 500; }
+.setting-item label, .slider-control label { font-weight: 500; }
 .setting-item select, .setting-item input { margin-top: 0.5rem; }
 .toggle-control { flex-direction: row; justify-content: space-between; align-items: center; }
 .toggle-control label { margin-bottom: 0; }
