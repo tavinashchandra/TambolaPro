@@ -2,6 +2,14 @@
 :root { --main-font: "Poppins", sans-serif; --board-font: "Roboto Slab", serif; }
 body, body.theme-light { --bg-color: #f0f2f5; --app-bg-color: #f7f8fc; --card-bg-color: #ffffff; --text-color: #333; --subtle-text-color: #6c757d; --header-color: #1a73e8; --primary-color: #4285f4; --secondary-color: #34a853; --accent-color: #fbbc05; --danger-color: #ea4335; --subtle-bg-color: #e8f0fe; --border-color: #dee2e6; --input-bg-color: #ffffff; --success-color: #28a745; --error-color: #dc3545; --shadow: 0 4px 12px rgba(0, 0, 0, 0.08); --claimed-bg-color: #e6f7e9; --called-number-text: #ffffff; }
 body.theme-dark { --bg-color: #121212; --app-bg-color: #1a1a1a; --card-bg-color: #242424; --text-color: #e1e1e1; --subtle-text-color: #888; --header-color: #bb86fc; --primary-color: #bb86fc; --secondary-color: #03dac6; --accent-color: #f8c35a; --danger-color: #cf6679; --subtle-bg-color: #333; --border-color: #444; --input-bg-color: #333; --success-color: #81c784; --error-color: #ef9a9a; --shadow: 0 4px 12px rgba(0, 0, 0, 0.3); --claimed-bg-color: #2a3b32; --called-number-text: #a5d6a7; }
+body.theme-sunset { --bg-color: #fdf3e6; --app-bg-color: #fff8ee; --card-bg-color: #ffffff; --text-color: #4e443a; --subtle-text-color: #8c7d6e; --header-color: #ff8c42; --primary-color: #ff8c42; --secondary-color: #ff5e5b; --accent-color: #ffc75f; --danger-color: #c70039; --subtle-bg-color: #fff4e6; --border-color: #fce2c4; --input-bg-color: #ffffff; --claimed-bg-color: #ffe6d5; }
+body.theme-contrast { --bg-color: #e9ecef; --app-bg-color: #ffffff; --card-bg-color: #ffffff; --text-color: #000000; --subtle-text-color: #555; --header-color: #000000; --primary-color: #000000; --secondary-color: #0d6efd; --accent-color: #fd7e14; --danger-color: #dc3545; --subtle-bg-color: #e9ecef; --border-color: #000000; --input-bg-color: #ffffff; --claimed-bg-color: #cce5ff; }
+body.theme-ocean { --bg-color: #e0f2f7; --app-bg-color: #f0faff; --card-bg-color: #ffffff; --text-color: #2c3e50; --subtle-text-color: #7f8c8d; --header-color: #3498db; --primary-color: #3498db; --secondary-color: #1abc9c; --accent-color: #f1c40f; --danger-color: #e74c3c; --subtle-bg-color: #ebf5fb; --border-color: #aed6f1; --input-bg-color: #ffffff; --claimed-bg-color: #d4edda; }
+body.theme-royal { --bg-color: #f4edf7; --app-bg-color: #fbf6ff; --card-bg-color: #ffffff; --text-color: #4a2d5e; --subtle-text-color: #8e44ad; --header-color: #8e44ad; --primary-color: #9b59b6; --secondary-color: #f1c40f; --accent-color: #e67e22; --danger-color: #c0392b; --subtle-bg-color: #fcf9fd; --border-color: #d2b4de; --input-bg-color: #ffffff; --claimed-bg-color: #e9d8f4; }
+body.theme-forest { --bg-color: #f8f4ed; --app-bg-color: #faf8f2; --card-bg-color: #ffffff; --text-color: #3d2c20; --subtle-text-color: #6c5a4b; --header-color: #6a9955; --primary-color: #8cb369; --secondary-color: #a4c483; --accent-color: #e76f51; --danger-color: #bc4749; --subtle-bg-color: #f9fdf6; --border-color: #d4e0c8; --input-bg-color: #ffffff; --claimed-bg-color: #e0f2d9; }
+body.theme-grayscale { --bg-color: #f0f0f0; --app-bg-color: #f7f7f7; --card-bg-color: #ffffff; --text-color: #333333; --subtle-text-color: #666666; --header-color: #555555; --primary-color: #777777; --secondary-color: #999999; --accent-color: #aaaaaa; --danger-color: #bbbbbb; --subtle-bg-color: #eeeeee; --border-color: #dddddd; --input-bg-color: #ffffff; --claimed-bg-color: #e5e5e5; }
+body.theme-warm { --bg-color: #fdf3e6; --app-bg-color: #fffaf7; --card-bg-color: #ffffff; --text-color: #5a4a40; --subtle-text-color: #8c7d6e; --header-color: #d46a4a; --primary-color: #e88c75; --secondary-color: #f7b49d; --accent-color: #f0c987; --danger-color: #c54a4a; --subtle-bg-color: #fcece8; --border-color: #f1d7c9; --input-bg-color: #ffffff; --claimed-bg-color: #fdeee7; }
+body.theme-cool { --bg-color: #e6f3fd; --app-bg-color: #f7fbff; --card-bg-color: #ffffff; --text-color: #405a6a; --subtle-text-color: #6e7d8c; --header-color: #4a75d4; --primary-color: #75a4e8; --secondary-color: #9dc4f7; --accent-color: #87c9f0; --danger-color: #4a4ac5; --subtle-bg-color: #e8effc; --border-color: #d7e2f1; --input-bg-color: #ffffff; --claimed-bg-color: #e7effd; }
 
 /* --- BASE & LAYOUT --- */
 body { font-family: var(--main-font); background-color: var(--bg-color); color: var(--text-color); margin: 0; }
@@ -61,8 +69,7 @@ input, select, textarea { font-family: var(--main-font); padding: 12px; border: 
 /* --- VERIFY PAGE --- */
 .verification-controls { display: flex; gap: 1rem; margin-top: 1rem; }
 
-/* --- MOBILE LAYOUT & HISTORY MODAL --- */
-@media (max-width: 500px) { .tambola-board-container, #called-numbers-container { display: none; } }
+/* --- HISTORY MODAL --- */
 .modal-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1500; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
 .history-modal { position: fixed; bottom: 0; left: 0; right: 0; max-width: 500px; margin: 0 auto; background: var(--card-bg-color); border-top-left-radius: 20px; border-top-right-radius: 20px; z-index: 2000; padding: 1rem 1.5rem 1.5rem; transform: translateY(100%); transition: transform 0.3s ease-out; }
 .modal-backdrop.active, .history-modal.active { opacity: 1; pointer-events: auto; transform: translateY(0); }
@@ -74,11 +81,9 @@ input, select, textarea { font-family: var(--main-font); padding: 12px; border: 
 
 /* --- SETTINGS PANE --- */
 .settings-grid { display: flex; flex-direction: column; gap: 1.5rem; }
-/* CHANGED: Replaced the old generic rule with this specific one */
 .setting-item { display: flex; flex-direction: column; }
 .setting-item label { font-weight: 500; }
 .setting-item select, .setting-item input { margin-top: 0.5rem; }
-/* This rule now correctly targets ONLY the toggle-control */
 .toggle-control { flex-direction: row; justify-content: space-between; align-items: center; }
 .toggle-control label { margin-bottom: 0; }
 .slider-control input[type="range"] { margin-top: 0.5rem; }
