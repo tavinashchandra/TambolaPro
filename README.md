@@ -9,14 +9,7 @@ The ultimate all-in-one web application for hosting Tambola (Housie) games right
 
 # Tambola Pro
 
-A modern, simple, and feature-rich Tambola (Indian Bingo) game manager. This web application helps you host a game of Tambola with a sleek user interface, automated number calling, and prize management.
-
-<div style="display: flex; flex-wrap: nowrap; gap: 10px; justify-content: center; align-items: flex-start;">
-  <img width="286" height="593" alt="chrome_ViYeuwpoPd" src="https://github.com/user-attachments/assets/0c048d4d-7fd1-4124-8195-c6cc6e1a5571" />
-  <img width="286" height="593" alt="chrome_J45OZLC9r6" src="https://github.com/user-attachments/assets/8694fb10-6eb9-4379-b334-675798042172" />
-  <img width="286" height="593" alt="chrome_Qq2eaCwLCC" src="https://github.com/user-attachments/assets/3dba366a-952e-4e94-af6a-3c1b633b4ff6" />
-  <img width="286" height="593" alt="chrome_U2hTrj5iy1" src="https://github.com/user-attachments/assets/6f7dd43d-576e-48db-a7cf-5f90482c3bd8" />
-</div>
+Tambola, also known as Housie or Bingo, is a popular game of chance. This is a web-based Tambola number caller and prize manager application, built to make hosting games easy and fun!
 
 
 ## Features ✨
@@ -29,10 +22,9 @@ A modern, simple, and feature-rich Tambola (Indian Bingo) game manager. This web
     * **Undo Functionality**: Made a mistake? Undo the last called number to correct it.
 * **Winner Verification**: A quick tool to verify a player's claim by checking if all their numbers have been called.
 * **Accessibility & Customization**:
-    * **Voice Announcements**: The app can announce the called numbers in English or Telugu (if a voice pack is installed on your device).
+    * **Voice Announcements**: The app can announce the called numbers.
     * **Theme Options**: Choose from a variety of color themes, including Light, Dark, Sunset, and more.
-    * **Font Styles**: Customize the app's look with different font options.
-
+   
 ## Getting Started 🚀
 
 To run this application locally, you just need a web browser.
