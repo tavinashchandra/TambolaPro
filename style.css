@@ -1331,3 +1331,49 @@ button.clear,
     border-color: var(--primary-color) !important;
     box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 66, 133, 244), 0.25) !important;
 }
+
+/* Enhanced styling for claimed prizes */
+.prize-item.claimed {
+  position: relative;
+  background-color: var(--subtle-bg-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+}
+
+/* Add "CLAIMED" banner ribbon */
+.prize-item.claimed::before {
+  content: "CLAIMED";
+  position: absolute;
+  top: 8px;
+  right: -30px;
+  background-color: var(--primary-color);
+  color: white;
+  padding: 2px 30px;
+  font-size: 0.7rem;
+  font-weight: bold;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Style for claimed prize name */
+.prize-item.claimed .prize-name {
+  font-weight: normal;
+  color: var(--subtle-text-color);
+}
+
+/* Style for claimed button */
+.prize-item.claimed .claim-btn {
+  background-color: transparent !important;
+  color: var(--subtle-text-color) !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* Style for input in claimed items */
+.prize-item.claimed .amount-input {
+  background-color: var(--subtle-bg-color);
+  border-color: var(--border-color);
+  color: var(--subtle-text-color);
+}
