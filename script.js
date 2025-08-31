@@ -1093,3 +1093,41 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Simple prize claiming enhancement - no audio effects
+document.addEventListener('DOMContentLoaded', function() {
+  // Function to enhance prize rendering
+  function enhancePrizeRendering() {
+    // Get the original renderPrizes function
+    const originalRenderPrizes = window.renderPrizes;
+    
+    // Override with enhanced version
+    window.renderPrizes = function() {
+      // Call original function if it exists
+      if (typeof originalRenderPrizes === 'function') {
+        originalRenderPrizes();
+      }
+      
+      // Add animations and transitions
+      document.querySelectorAll('.prize-item').forEach(item => {
+        if (item.classList.contains('claimed')) {
+          // Make sure the claimed button has the right style and text
+          const claimBtn = item.querySelector('.claim-btn');
+          if (claimBtn) {
+            claimBtn.textContent = 'Unclaim';
+            claimBtn.classList.add('is-claimed');
+          }
+        }
+      });
+    };
+    
+    // Apply immediately if prizes already rendered
+    const prizeItems = document.querySelectorAll('.prize-item');
+    if (prizeItems.length > 0) {
+      window.renderPrizes();
+    }
+  }
+  
+  // Initialize enhancements
+  enhancePrizeRendering();
+});
